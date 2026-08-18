@@ -1,0 +1,41 @@
+# ============ SEO 内容自动生成机器人配置 ============
+
+site:
+  name: "我的工具站"                 # 站点名称（用于 JSON-LD 署名）
+  url: "https://example.com"        # 网站域名，末尾不要带 /
+  language: "zh-CN"                 # 页面语言（zh-CN / en-US）
+  timezone: "Asia/Shanghai"
+
+ai:
+  # ???? tokenrhythm?DeepSeek ???Chat Completions ???
+  base_url: "https://tokenrhythm.studio/v1"
+  api_key: """"   # ???? Key?????????????? api_key_env
+  api_key_env: ""                  # ?????????? TOKENRHYTHM_API_KEY???????????
+  model: "deepseek-v4-flash-0731"
+  temperature: 0.7
+  max_tokens: 2000
+  timeout_seconds: 120
+
+publish:
+  type: "local"                     # local=输出 Markdown 到本地 output/；wordpress=发布到 WordPress
+  wordpress:                        # type 为 wordpress 时必填
+    base_url: "https://example.com/wp-json/wp/v2"
+    username: "admin"
+    app_password_env: "WORDPRESS_APP_PASSWORD"   # 应用密码环境变量名（WP 后台-用户-应用程序密码）
+    post_status: "draft"            # draft=先存草稿人工审核，publish=直接发布
+    category_ids: []                # 文章分类 ID 列表（WP 后台-文章-分类，URL 中的 tag_ID）
+  local:
+    output_dir: "output"            # 本地模式输出目录（相对项目根目录）
+
+schedule:
+  enabled: false                    # 是否常驻定时发布（python main.py schedule）
+  interval_minutes: 60              # 每多少分钟发布一批
+  posts_per_run: 1                  # 每批发布篇数
+  max_daily: 10                     # 每日发布上限，防止一口气发完被搜索引擎判定异常
+  at_time: null                     # 可选：固定时刻，如 "09:00"（优先级高于 interval）
+
+seo:
+  internal_links: []                # 站内可引用的页面 URL 列表，AI 会从中选 2~4 个做内链
+  # internal_links:
+  #   - "https://example.com/fangdai-jisuanqi/"
+  #   - "https://example.com/geren-suodeshui-jisuanqi/"
