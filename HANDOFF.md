@@ -1,7 +1,7 @@
 # HANDOFF · 01-SEO内容站（自动运营机器人）
 
 > 本文件用于「接力」项目：任何接手或下次打开会话的人，先读这个，再动手。
-> 最后更新：2026-10-12
+> 最后更新：2026-10-13
 
 ---
 
@@ -18,12 +18,12 @@
 | 项目 | 状态 | 说明 |
 | --- | --- | --- |
 | 项目脚手架 / 代码 | ✅ 完成 | `seo_article_bot/` 核心包 + `main.py` + `build_site.py` 均可用 |
-| 配置 config.yaml | ✅ 已填 | AI 用 tokenrhythm（DeepSeek 上游）接口，Key 已写入明文 |
+| 配置 config.yaml | ✅ 已填 | AI 已切 **DeepSeek 官方**接口（base_url `https://api.deepseek.com/v1`，model `deepseek-chat`），Key 明文在本地、已被 .gitignore 忽略 |
 | 主题池 topics.csv | 🟡 58 个 | 8 大垂直：理财7/装修6/母婴5/工具4/健康7/饮食4/出行5/教育4/数码4/职场4/居家4/政务4 |
 | 已生成文章 | ✅ 59 篇 | output/ + site/ 已构建（2026-10-12 全量补齐；含 1 篇历史非 csv 文章） |
 | 已用主题 | ✅ 58 个 | `topics_used.json` 记录（csv 58 个选题全部生成完毕，剩余 0） |
 | **剩余未生成主题** | ✅ **0 个** | csv 选题已全部生成 |
-| 站点部署 | ❌ 未做 | `site.url` 仍是占位 `https://example.com` |
+| 站点部署 | 🟡 已就绪待上线 | 域名已定 **liulianggu.site**（腾讯云 DNSPod）；`site.url` 已改真实域名；分支已改 `main`；`deploy.yml` 含 `SITE_URL` 兜底；待建 GitHub 仓库 + 配置 DNS |
 | 搜索引擎提交 | ❌ 未做 | 未提交 GSC / Bing / 百度 |
 | AdSense 申请 | ❌ 未做 | 需先有可访问站点 + 一定内容量 |
 | 定时发布 | ⚪ 配置关闭 | `schedule.enabled: false`，目前靠手动 `generate` |
@@ -100,15 +100,35 @@ python main.py schedule          # 常驻进程，按 config.schedule 节奏发�
 
 ---
 
-## 4. 部署到 GitHub Pages（必做，见 站长提交清单.md）
+## 4. 部署到 GitHub Pages（已接入域名 liulianggu.site，腾讯云 DNSPod）
 
-1. 建 GitHub 仓库（不要勾选初始化文件）；
-2. `git remote add origin ... && git push -u origin master`（用 PAT 代替密码）；
-3. 仓库 Settings → Pages → Source 选 **GitHub Actions**；
-4. （可选）Settings → Variables 加 `SITE_URL`；
-5. 推送后 Actions 自动构建并部署；浏览器打开 `https://用户名.github.io/仓库名/` 应看到首页。
-6. 部署后在 GSC / Bing / 百度 提交 `sitemap.xml`，请求编入索引。
-   - 国内流量（百度）建议再买已备案域名 + Cloudflare，GitHub Pages 国内抓取差。
+> 项目已本地提交到 `main` 分支，但 **git 还没有远程仓库**，需你建库后推送。部署链路：
+> push `main` → Actions 用 `SITE_URL`（兜底 `https://liulianggu.site`）构建 → 部署到 GitHub Pages → 自定义域名 liulianggu.site。
+
+1. **建 GitHub 仓库**（Public/Private 均可；不要勾选初始化文件），记下仓库 URL。
+2. 本地关联并推送（当前分支已是 `main`）：
+   ```bash
+   git remote add origin https://github.com/<用户名>/<仓库名>.git
+   git push -u origin main
+   ```
+   首次推送用 GitHub 个人访问令牌（PAT，勾 `repo` 权限）代替密码。
+3. 仓库 **Settings → Pages → Source 选 GitHub Actions**；等首次部署成功（Actions 标签页可见）。
+4. **Settings → Secrets and Variables → Actions → Variables** 加 `SITE_URL = https://liulianggu.site`
+   （不配也能跑，`deploy.yml` 已兜底真实域名）。
+5. **Settings → Pages → Custom domain** 填 `liulianggu.site` → Save；DNS 生效后勾选 **Enforce HTTPS**
+   （GitHub 自动签发证书，约 15~30 分钟）。
+6. **腾讯云 DNSPod 解析**（域名控制台 → 解析 → 添加记录）：
+   | 主机记录 | 类型 | 记录值 | 说明 |
+   | --- | --- | --- | --- |
+   | `@` | A | `185.199.108.153` | GitHub Pages |
+   | `@` | A | `185.199.109.153` | GitHub Pages |
+   | `@` | A | `185.199.110.153` | GitHub Pages |
+   | `@` | A | `185.199.111.153` | GitHub Pages |
+   | `www`（可选）| CNAME | `<用户名>.github.io` | 如需 www 访问 |
+   改完等 DNS 生效（几分钟~几小时），再回 GitHub 开 Enforce HTTPS。
+7. 浏览器打开 `https://liulianggu.site` 应看到首页；随后在 GSC / Bing / 百度 提交 `sitemap.xml`。
+   - 搜索引擎验证文件（`google*.html` / `baidu_verify_*.html`）放到**仓库根目录**，CI 会自动复制到站点。
+   - 国内（百度）抓取 GitHub Pages 偏慢，必要时后续换 Cloudflare Pages + 已备案域名提速。
 
 ---
 
@@ -120,8 +140,9 @@ python main.py schedule          # 常驻进程，按 config.schedule 节奏发�
    - 附带修复：原 `generator.py` 仅在网络/空内容时重试，遇到**模型返回非法 JSON 会直接整批崩溃**；
      已改为「JSON 解析失败/字段缺失/空内容」都自动重试（最多 3 次），并先剥离 ```` ```json ```` 代码围栏；
      同时 `cmd_generate` 改为单篇失败跳过、不中断整批。一轮 46 篇曾因该 bug 中途失败，加固后补跑剩余 6 篇全过。
-1. **未部署 + 占位域名**：`site.url` 仍为 `https://example.com`。部署前用
-   `python build_site.py --domain 真实域名` 重建，否则 sitemap/canonical 全是 example.com。
+1. **占位域名已解决**：`site.url` 已改为 `https://liulianggu.site`，本地构建与 CI（兜底 `SITE_URL`）都用真实域名。
+   剩余阻塞：本地 git 此前无远程仓库、分支为 `master`，已把分支改名为 `main` 对齐 `deploy.yml`；
+   还需你**建 GitHub 仓库并 push**，详见第 4 节。
 2. **明文 API Key**：`config.yaml` 含 Key，已 gitignore。换机器 / 公开仓库前改环境变量方式。
 3. **Mock 标签 bug（仅 --mock 测试受影响，真实生成无碍）**：`generator.py:_generate_mock`
    里用 `{"calculator":...,"converter":...,"faq":...,"guide":...}.get(category)` 映射标签，
@@ -137,19 +158,16 @@ python main.py schedule          # 常驻进程，按 config.schedule 节奏发�
 
 ## 6. 待办 / 下一步（接手直接照做）
 
-> ⚠️ 前置条件：先解决第 5 节「API Key 过期」问题（换有效 Key），否则以下生成步骤全部卡住。
-
-- [ ] **换上有效 AI Key**：更新 `config.yaml` 的 `ai.api_key`（或改 `api_key_env` 环境变量）。
-      验证：`python main.py generate --count 1` 能产出 1 篇即说明通了。
-- [ ] **生成剩余 47 个主题**（池已扩到 58，已用 11，剩 47）：
-      - 早期未做 11 个：装修6（装修预算/墙砖数量/乳胶漆用量/窗帘尺寸/装修工期/瓷砖美缝）+ 母婴5（预产期/宝宝身高体重/疫苗接种/辅食添加/孕期体重）
-      - 新增 36 个：健康7 / 饮食4 / 出行5 / 教育4 / 数码4 / 职场4 / 居家4 / 政务4
-      - 建议分批：`python main.py generate --count 10 --category 装修` 等，避免一次超时。
-- [ ] 真实域名 + `build_site.py --domain` 重建并部署到 GitHub Pages / Cloudflare。
-- [ ] 提交 GSC / Bing / 百度 sitemap，请求索引。
-- [ ] 内容到 ~20 篇后申请 AdSense（英文站单价更高，可后续测）。
-- [ ] 第 30 天复盘：看收录率（>80%）、有无搜索点击，淘汰零流量方向。
-- [ ] （可选）修复第 5 节 mock 标签 bug；开启 `schedule` 定时发布。
+- [x] **AI Key 已换（DeepSeek 官方）**：`config.yaml` 已填官方 Key，`generate` 全量通过。
+- [x] **内容已补齐**：58 个选题全部生成（59 篇），`topics.csv` 剩余 0。
+- [x] **域名与构建已就绪**：`site.url=https://liulianggu.site`，`deploy.yml` 含 `SITE_URL` 兜底，分支已改 `main`，已本地提交。
+- [ ] **建 GitHub 仓库并推送**（当前 git 无远程）：见第 4 节第 1~2 步，建库后 `git remote add origin <url>` + `git push -u origin main`。
+- [ ] **GitHub Pages 设置**：Settings → Pages → Source 选 GitHub Actions；Variables 加 `SITE_URL=https://liulianggu.site`；Settings → Pages → Custom domain 填 `liulianggu.site` 并开启 Enforce HTTPS。
+- [ ] **腾讯云 DNSPod 解析**（见第 4 节记录表）：`@` 加 4 条 A 记录指向 GitHub Pages IP；可选 `www` CNAME。
+- [ ] 部署后在 GSC / Bing / 百度 提交 `sitemap.xml`，请求索引（验证文件放仓库根，CI 自动复制）。
+- [ ] 内容稳定后申请 AdSense（建议先有真实流量与隐私页）。
+- [ ] 第 30 天复盘：收录率（>80%）、搜索点击，淘汰零流量方向；要冲 100 篇把 `topics.csv` 扩到 100+ 再 `generate`。
+- [ ] （可选）修复 mock 标签 bug；开启 `schedule` 定时发布。
 
 ---
 
