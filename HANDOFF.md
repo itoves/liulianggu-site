@@ -23,7 +23,7 @@
 | 已生成文章 | ✅ 59 篇 | output/ + site/ 已构建（2026-10-12 全量补齐；含 1 篇历史非 csv 文章） |
 | 已用主题 | ✅ 58 个 | `topics_used.json` 记录（csv 58 个选题全部生成完毕，剩余 0） |
 | **剩余未生成主题** | ✅ **0 个** | csv 选题已全部生成 |
-| 站点部署 | 🟢 已上线（HTTP） | DNS 已生效（`nslookup` 返回 185.199.108/109.153，`http://liulianggu.site` 返回 200），59 篇文章已可通过自定义域名访问；**自定义域名已绑定，HTTPS 证书 GitHub 自动签发中（签发完成前 `https://` 暂报证书错）** |
+| 站点部署 | 🟢 已上线（HTTPS） | DNS 校验已通过（`DNS valid for primary`），GitHub 已签发 HTTPS 证书，`https://liulianggu.site` 实测返回 200（返回本站内容）；仅 `www.liulianggu.site` 报未配置（无害，未设 www）；**待在 Settings → Pages 勾选 Enforce HTTPS** |
 | 搜索引擎提交 | ❌ 未做 | 未提交 GSC / Bing / 百度 |
 | AdSense 申请 | ❌ 未做 | 需先有可访问站点 + 一定内容量 |
 | 定时发布 | ⚪ 配置关闭 | `schedule.enabled: false`，目前靠手动 `generate` |
@@ -196,7 +196,7 @@ python main.py schedule          # 常驻进程，按 config.schedule 节奏发�
 - [x] **建 GitHub 仓库并推送**：仓库 `itoves/liulianggu-site`（公开）已建，`main` 已推送，Actions 自动构建部署成功（run 已 completed）。
 - [x] **GitHub Pages 设置**：Source=GitHub Actions、`SITE_URL` 变量、自定义域名 `liulianggu.site` 均已在 API 层完成；HTTPS 证书将在 DNS 生效后自动签发，随后在 Settings → Pages 勾选 Enforce HTTPS。
 - [x] **腾讯云 DNSPod 解析**：免费版仅 2 条 A 记录额度，已加 `@` A `185.199.108.153` / `185.199.109.153`（2 条即够 GitHub Pages）。已验证生效（`nslookup` 返回上述 IP、`http://liulianggu.site` 返回 200）。
-- [ ] **GitHub Pages HTTPS 证书**：GitHub 正在为自定义域名 `liulianggu.site` 签发（首次通常 15~60 分钟，偶有更久）。签发完成后 `https://liulianggu.site` 可正常访问；若 Settings → Pages 的 Enforce HTTPS 未自动勾选，手动勾选即可。
+- [x] **GitHub Pages HTTPS 证书**：DNS 校验通过后 GitHub 已签发证书，`https://liulianggu.site` 实测 200；待在 Settings → Pages 勾选 Enforce HTTPS 即完成（2026-10-13 实测通过）。
 - [ ] 部署后在 GSC / Bing / 百度 提交 `sitemap.xml`，请求索引（验证文件放仓库根，CI 自动复制）。
 - [ ] 内容稳定后申请 AdSense（建议先有真实流量与隐私页）。
 - [ ] 第 30 天复盘：收录率（>80%）、搜索点击，淘汰零流量方向；要冲 100 篇把 `topics.csv` 扩到 100+ 再 `generate`。
