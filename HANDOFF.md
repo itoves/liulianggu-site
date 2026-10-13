@@ -102,7 +102,7 @@ python main.py schedule          # 常驻进程，按 config.schedule 节奏发�
 
 ## 4. 部署到 GitHub Pages（已接入域名 liulianggu.site，腾讯云 DNSPod）
 
-> 项目已本地提交到 `main` 分支，但 **git 还没有远程仓库**，需你建库后推送。部署链路：
+> 项目已本地提交并推送到 `main` 分支（仓库 `itoves/liulianggu-site`），GitHub Pages 已开启、自定义域名 `liulianggu.site` 已绑定。部署链路：
 > push `main` → Actions 用 `SITE_URL`（兜底 `https://liulianggu.site`）构建 → 部署到 GitHub Pages → 自定义域名 liulianggu.site。
 
 1. **建 GitHub 仓库**（Public/Private 均可；不要勾选初始化文件），记下仓库 URL。
@@ -117,15 +117,34 @@ python main.py schedule          # 常驻进程，按 config.schedule 节奏发�
    （不配也能跑，`deploy.yml` 已兜底真实域名）。
 5. **Settings → Pages → Custom domain** 填 `liulianggu.site` → Save；DNS 生效后勾选 **Enforce HTTPS**
    （GitHub 自动签发证书，约 15~30 分钟）。
-6. **腾讯云 DNSPod 解析**（域名控制台 → 解析 → 添加记录）：
-   | 主机记录 | 类型 | 记录值 | 说明 |
+6. **腾讯云 DNSPod 解析**（让域名指向 GitHub Pages，这是上线最后一步）：
+
+   **操作路径（网页点点点）：**
+   1. 浏览器打开 [cloud.tencent.com](https://cloud.tencent.com) 并登录（买域名的账号）。
+   2. 顶部搜索框搜 **「DNS 解析 DNSPod」** → 进入 **DNS 解析 DNSPod** 控制台。
+   3. 在「我的域名」列表里找到 **`liulianggu.site`** → 点它（或点右侧「解析」）。
+   4. 进入后点 **「添加记录」**，按下面表格填 **4 条 A 记录**（每填完一条点「保存」，再点一次「添加记录」填下一条）。
+   5. （可选）再点一次「添加记录」，加一条 `www` 的 CNAME（见下表）。
+
+   **要填的 4 条 A 记录（主机记录填 `@`，类型选 `A`，记录值分别填，TTL 默认 600 即可）：**
+
+   | 主机记录 | 记录类型 | 记录值 | TTL |
    | --- | --- | --- | --- |
-   | `@` | A | `185.199.108.153` | GitHub Pages |
-   | `@` | A | `185.199.109.153` | GitHub Pages |
-   | `@` | A | `185.199.110.153` | GitHub Pages |
-   | `@` | A | `185.199.111.153` | GitHub Pages |
-   | `www`（可选）| CNAME | `<用户名>.github.io` | 如需 www 访问 |
-   改完等 DNS 生效（几分钟~几小时），再回 GitHub 开 Enforce HTTPS。
+   | `@` | A | `185.199.108.153` | 600 |
+   | `@` | A | `185.199.109.153` | 600 |
+   | `@` | A | `185.199.110.153` | 600 |
+   | `@` | A | `185.199.111.153` | 600 |
+
+   可选 `www` 访问：
+
+   | 主机记录 | 记录类型 | 记录值 | TTL |
+   | --- | --- | --- | --- |
+   | `www` | CNAME | `itoves.github.io` | 600 |
+
+   6. 填完后**不用点任何「启用」**，DNSPod 保存即生效。等待 DNS 传播（通常 **5 分钟~2 小时**，可用 `nslookup liulianggu.site` 验证是否已解析到上面某个 IP）。
+   7. **回到 GitHub** 仓库 `itoves/liulianggu-site` → **Settings → Pages** → 看到 Custom domain 显示 `liulianggu.site` 且旁边有 **✓** → 勾选 **Enforce HTTPS**（GitHub 在 DNS 生效后自动签发证书，约 15~30 分钟；若未自动勾，等证书就绪再勾）。
+
+   > 提示：GitHub Pages 服务器在美国，**腾讯云域名解析到它无需国内 ICP 备案**。但百度对 GitHub Pages 抓取偏慢，若以后要冲国内流量，再考虑换 Cloudflare Pages + 已备案域名。
 7. 浏览器打开 `https://liulianggu.site` 应看到首页；随后在 GSC / Bing / 百度 提交 `sitemap.xml`。
    - 搜索引擎验证文件（`google*.html` / `baidu_verify_*.html`）放到**仓库根目录**，CI 会自动复制到站点。
    - 国内（百度）抓取 GitHub Pages 偏慢，必要时后续换 Cloudflare Pages + 已备案域名提速。
