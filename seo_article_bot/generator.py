@@ -5,6 +5,7 @@ from __future__ import annotations
 import json
 import logging
 import os
+import re
 import time
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
@@ -85,6 +86,7 @@ class ArticleGenerator:
         max_retries = ai.get("max_retries", 2)
 
         def _post():
+            last_err = None
             for attempt in range(max_retries + 1):
                 try:
                     resp = requests.post(
@@ -97,6 +99,7 @@ class ArticleGenerator:
                     return resp.json()
                 except requests.HTTPError as e:
                     status = e.response.status_code if e.response is not None else 0
+                    last_err = e
                     if status in (429,) or status >= 500:
                         logger.warning(
                             "API error %s, retry %s/%s", status, attempt + 1, max_retries
@@ -105,39 +108,70 @@ class ArticleGenerator:
                             time.sleep(2 * (attempt + 1))
                             continue
                     raise
+                except requests.RequestException as e:
+                    last_err = e
+                    if attempt < max_retries:
+                        logger.warning("请求异常 %s, retry %s/%s", e, attempt + 1, max_retries)
+                        time.sleep(2 * (attempt + 1))
+                        continue
+                    raise
+            raise last_err  # 正常不会到达
 
-        body = _post()
-        content = (body["choices"][0]["message"].get("content") or "").strip()
-        for attempt in range(max_retries):
-            if content:
-                break
-            logger.warning("Empty content from API, retry %s/%s", attempt + 1, max_retries)
-            time.sleep(2 * (attempt + 1))
+        # 整体重试：网络/HTTP 错误、空内容、JSON 解析失败、字段缺失都重试
+        last_err: Exception | None = None
+        for attempt in range(max_retries + 1):
             body = _post()
             content = (body["choices"][0]["message"].get("content") or "").strip()
-        data = self._parse_model_json(content)
-        title = str(data["title"]).strip()
-        return Article(
-            keyword=topic.keyword,
-            title=title,
-            slug=make_slug(title, fallback=topic.keyword),
-            category=topic.category,
-            summary=str(data.get("summary", "")).strip(),
-            markdown=str(data["content"]).strip(),
-            tags=[str(t).strip() for t in data.get("tags", [])][:8],
-            faq=[{"q": str(it["q"]), "a": str(it["a"])} for it in data.get("faq", [])],
-            json_ld={},
-            internal_links=self._internal_links(),
-        )
+            if not content:
+                last_err = ValueError("API 返回空内容")
+                logger.warning("空内容, retry %s/%s", attempt + 1, max_retries)
+                if attempt < max_retries:
+                    time.sleep(2 * (attempt + 1))
+                    continue
+                break
+            try:
+                data = self._parse_model_json(content)
+            except (ValueError, json.JSONDecodeError) as e:
+                last_err = e
+                logger.warning("JSON 解析失败, retry %s/%s: %s", attempt + 1, max_retries, e)
+                if attempt < max_retries:
+                    time.sleep(2 * (attempt + 1))
+                    continue
+                break
+            if not data.get("title") or not data.get("content"):
+                last_err = ValueError("返回缺少 title/content 字段")
+                logger.warning("字段缺失, retry %s/%s", attempt + 1, max_retries)
+                if attempt < max_retries:
+                    time.sleep(2 * (attempt + 1))
+                    continue
+                break
+            title = str(data["title"]).strip()
+            return Article(
+                keyword=topic.keyword,
+                title=title,
+                slug=make_slug(title, fallback=topic.keyword),
+                category=topic.category,
+                summary=str(data.get("summary", "")).strip(),
+                markdown=str(data["content"]).strip(),
+                tags=[str(t).strip() for t in data.get("tags", [])][:8],
+                faq=[{"q": str(it["q"]), "a": str(it["a"])} for it in data.get("faq", [])],
+                json_ld={},
+                internal_links=self._internal_links(),
+            )
+        raise RuntimeError(f"生成失败（已重试 {max_retries} 次）: {last_err}")
 
     @staticmethod
     def _parse_model_json(content: str) -> dict:
         text = content.strip()
+        # 去掉模型可能加的 markdown 代码围栏（```json ... ```）
+        if text.startswith("```"):
+            text = re.sub(r"^```[A-Za-z0-9]*\n?", "", text)
+            text = re.sub(r"\n?```$", "", text).strip()
         try:
             return json.loads(text)
         except json.JSONDecodeError:
             start, end = text.find("{"), text.rfind("}")
-            if start != -1 and end != -1:
+            if start != -1 and end != -1 and end > start:
                 return json.loads(text[start : end + 1])
             raise ValueError(f"模型输出不是有效 JSON: {text[:200]}")
 

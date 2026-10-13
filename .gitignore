@@ -4,3 +4,6 @@ __pycache__/
 config.yaml
 scheduler_state.json
 site/
+
+# 忽略 agent 工作记忆（非项目交付物）
+.workbuddy/

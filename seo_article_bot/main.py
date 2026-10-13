@@ -43,17 +43,24 @@ def cmd_init(_args) -> int:
 
 
 def cmd_generate(args) -> int:
-    """只生成到本地 output/，无论发布模式配置是什么。"""
+    """只生成到本地 output/，无论发布模式配置是什么。单篇失败不影响其余。"""
     config = load_config(args.config)
     pool = TopicPool(config)
     topics = pool.next_topics(args.count, category=args.category)
     generator = ArticleGenerator(config)
     publisher = LocalPublisher(config)
+    ok = 0
     for topic in topics:
-        article = generator.generate(topic, mock=args.mock)
+        try:
+            article = generator.generate(topic, mock=args.mock)
+        except Exception as e:  # 单篇失败跳过，不中断整批
+            logger.error("生成失败，跳过该主题：%s（%s）", topic.keyword, e)
+            continue
         path = publisher.publish(article)
         pool.mark_used([topic])
+        ok += 1
         print(f"[生成] {article.title}\n       -> {path}")
+    print(f"本次成功生成 {ok}/{len(topics)} 篇。")
     return 0
 
 
