@@ -119,7 +119,7 @@ def page_wrap(title: str, content_html: str, site: dict, canonical: str = "", de
 <footer class="site-footer">
   <div class="container">
     <p>&copy; {datetime.now().year} {escape(site.get('name', '我的工具站'))} · 内容均为原创，仅供学习参考</p>
-    <p><a href="/sitemap.xml">sitemap</a> · <a href="/robots.txt">robots</a></p>
+    <p><a href="/sitemap.xml">sitemap</a> · <a href="/robots.txt">robots</a> · <a href="/privacy/">隐私政策</a></p>
   </div>
 </footer>
 </body>
@@ -234,6 +234,39 @@ nav a:hover,nav a.active{color:var(--accent)}
 @media(max-width:640px){.post{padding:20px}.hero h1{font-size:26px}}"""
 
 
+def render_privacy_page(site: dict) -> str:
+    """生成隐私政策页（AdSense / 百度联盟 审核硬性要求）。"""
+    name = escape(site.get("name", "我的工具站"))
+    content = f"""
+<article class="post">
+  <header><h1>隐私政策</h1></header>
+  <div class="post-body">
+    <p>本页说明 <strong>{name}</strong>（以下简称"本站"）如何收集、使用与保护您的信息。访问或使用本站即表示您同意本政策。</p>
+
+    <h2>一、我们收集的信息</h2>
+    <p>本站为静态内容站点，<strong>不主动收集您的姓名、电话、邮箱等个人身份信息</strong>。服务器仅会记录标准的匿名访问日志（如访问时间、来源页、浏览器类型），用于排查故障与了解整体流量趋势，无法定位到具体个人。</p>
+
+    <h2>二、第三方广告与 Cookie</h2>
+    <p>为维持站点运营，本站可能投放 <strong>Google AdSense</strong> 等第三方广告。这些广告联盟会通过 Cookie 或类似技术，依据您的浏览行为投放个性化或一般性广告。您可随时在浏览器设置中清除或禁用 Cookie；禁用后页面仍可正常浏览，但广告相关性可能下降。关于 Google 广告的隐私控制，详见 <a href="https://policies.google.com/technologies/ads" target="_blank" rel="noopener">Google 广告政策</a>。</p>
+
+    <h2>三、外部链接</h2>
+    <p>本站可能包含指向第三方网站的链接。这些站点有独立的隐私政策，本站对其内容或数据处理方式不承担责任。</p>
+
+    <h2>四、未成年人保护</h2>
+    <p>本站内容面向一般成年读者，不含针对未成年人的定向广告。若您为未成年人，请在监护人指导下使用。</p>
+
+    <h2>五、政策变更</h2>
+    <p>本站可能不时更新本隐私政策，更新后将以本页最新版本为准。</p>
+
+    <h2>六、联系我们</h2>
+    <p>如对本政策有疑问，可通过站点首页提供的渠道与我们联系。</p>
+  </div>
+</article>"""
+    return page_wrap(f"{name} · 隐私政策", content, site,
+                     canonical=f"{site['url'].rstrip('/')}/privacy/",
+                     description="了解本站如何收集与使用信息、第三方广告与 Cookie 的说明。")
+
+
 def write_static_files(site: dict, site_url: str) -> None:
     (SITE_DIR / "style.css").write_text(STYLE_CSS, encoding="utf-8")
     favicon = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" rx="20" fill="#2563eb"/><text x="50" y="68" font-size="52" text-anchor="middle" fill="#fff" font-family="Arial">S</text></svg>'
@@ -289,6 +322,10 @@ def build(domain: str | None = None) -> Path:
 
     write_static_files(site, site_url)
     write_sitemap(articles, site_url)
+
+    # 隐私政策页（AdSense / 百度联盟 审核硬性要求）
+    (SITE_DIR / "privacy").mkdir(parents=True, exist_ok=True)
+    (SITE_DIR / "privacy" / "index.html").write_text(render_privacy_page(site), encoding="utf-8")
     return SITE_DIR
 
 
