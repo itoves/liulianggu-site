@@ -23,7 +23,7 @@
 | 已生成文章 | ✅ 59 篇 | output/ + site/ 已构建（2026-10-12 全量补齐；含 1 篇历史非 csv 文章） |
 | 已用主题 | ✅ 58 个 | `topics_used.json` 记录（csv 58 个选题全部生成完毕，剩余 0） |
 | **剩余未生成主题** | ✅ **0 个** | csv 选题已全部生成 |
-| 站点部署 | 🟡 已就绪待上线 | 域名已定 **liulianggu.site**（腾讯云 DNSPod）；`site.url` 已改真实域名；分支已改 `main`；`deploy.yml` 含 `SITE_URL` 兜底；待建 GitHub 仓库 + 配置 DNS |
+| 站点部署 | 🟢 已部署待解析 | 仓库 `itoves/liulianggu-site`（公开）已推送 `main`；GitHub Pages 已开启（Actions 模式）；自定义域名 `liulianggu.site` 已绑定；**仅差腾讯云 DNSPod 加 A 记录** |
 | 搜索引擎提交 | ❌ 未做 | 未提交 GSC / Bing / 百度 |
 | AdSense 申请 | ❌ 未做 | 需先有可访问站点 + 一定内容量 |
 | 定时发布 | ⚪ 配置关闭 | `schedule.enabled: false`，目前靠手动 `generate` |
@@ -161,8 +161,8 @@ python main.py schedule          # 常驻进程，按 config.schedule 节奏发�
 - [x] **AI Key 已换（DeepSeek 官方）**：`config.yaml` 已填官方 Key，`generate` 全量通过。
 - [x] **内容已补齐**：58 个选题全部生成（59 篇），`topics.csv` 剩余 0。
 - [x] **域名与构建已就绪**：`site.url=https://liulianggu.site`，`deploy.yml` 含 `SITE_URL` 兜底，分支已改 `main`，已本地提交。
-- [ ] **建 GitHub 仓库并推送**（当前 git 无远程）：见第 4 节第 1~2 步，建库后 `git remote add origin <url>` + `git push -u origin main`。
-- [ ] **GitHub Pages 设置**：Settings → Pages → Source 选 GitHub Actions；Variables 加 `SITE_URL=https://liulianggu.site`；Settings → Pages → Custom domain 填 `liulianggu.site` 并开启 Enforce HTTPS。
+- [x] **建 GitHub 仓库并推送**：仓库 `itoves/liulianggu-site`（公开）已建，`main` 已推送，Actions 自动构建部署成功（run 已 completed）。
+- [x] **GitHub Pages 设置**：Source=GitHub Actions、`SITE_URL` 变量、自定义域名 `liulianggu.site` 均已在 API 层完成；HTTPS 证书将在 DNS 生效后自动签发，随后在 Settings → Pages 勾选 Enforce HTTPS。
 - [ ] **腾讯云 DNSPod 解析**（见第 4 节记录表）：`@` 加 4 条 A 记录指向 GitHub Pages IP；可选 `www` CNAME。
 - [ ] 部署后在 GSC / Bing / 百度 提交 `sitemap.xml`，请求索引（验证文件放仓库根，CI 自动复制）。
 - [ ] 内容稳定后申请 AdSense（建议先有真实流量与隐私页）。
