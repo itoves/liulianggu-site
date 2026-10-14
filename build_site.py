@@ -66,6 +66,29 @@ def read_articles() -> list[dict]:
     return articles
 
 
+def load_registry() -> dict:
+    """读取 tools/registry.json（工具站配置）。缺失时返回空字典。"""
+    reg_path = PROJECT_ROOT / "tools" / "registry.json"
+    if reg_path.exists():
+        try:
+            return json.loads(reg_path.read_text(encoding="utf-8"))
+        except Exception:
+            return {}
+    return {}
+
+
+def copy_tool_assets(site_dir: Path) -> None:
+    """把工具引擎与配置复制到 site/assets，供浏览器加载。"""
+    assets = site_dir / "assets"
+    assets.mkdir(parents=True, exist_ok=True)
+    src = PROJECT_ROOT / "tools" / "tools.js"
+    if src.exists():
+        shutil.copyfile(src, assets / "tools.js")
+    reg = PROJECT_ROOT / "tools" / "registry.json"
+    if reg.exists():
+        shutil.copyfile(reg, assets / "registry.json")
+
+
 # ---------------- 渲染 ----------------
 
 def render_article_html(article: dict) -> str:
@@ -154,11 +177,25 @@ def render_home(articles: list[dict], site: dict) -> str:
 </section>"""
 
 
-def render_article_page(article: dict, site: dict) -> str:
+def render_article_page(article: dict, site: dict, registry: dict | None = None) -> str:
     meta = article["meta"]
     body_html = render_article_html(article)
     site_url = site["url"].rstrip("/")
     canonical = f"{site_url}/{meta['slug']}/"
+
+    # 工具注入：若本页 keyword 在 registry 中，则在正文顶部放置可交互工具
+    tool_cfg = (registry or {}).get(meta.get("keyword"))
+    widget_html = ""
+    tool_script = ""
+    if tool_cfg:
+        widget_html = f'<div class="tool-widget" data-tool-keyword="{escape(meta["keyword"])}"></div>'
+        tool_script = (
+            '<script type="module">'
+            "import {autoMount} from '/assets/tools.js';"
+            "fetch('/assets/registry.json').then(r=>r.json()).then(reg=>autoMount(reg)).catch(()=>{});"
+            "</script>"
+        )
+
     json_ld = meta.get("json_ld") or {}
     if not json_ld:
         json_ld = {
@@ -169,7 +206,22 @@ def render_article_page(article: dict, site: dict) -> str:
             "datePublished": meta.get("date", ""),
             "author": {"@type": "Organization", "name": site.get("name", "")},
         }
-    script = '<script type="application/ld+json">' + json.dumps(json_ld, ensure_ascii=False) + "</script>"
+    # 有工具的页面补充 SoftwareApplication 结构化数据（增强富媒体机会）
+    if tool_cfg:
+        app_ld = {
+            "@context": "https://schema.org",
+            "@type": "SoftwareApplication",
+            "name": meta["title"],
+            "applicationCategory": "UtilityApplication",
+            "operatingSystem": "Web",
+            "offers": {"@type": "Offer", "price": "0", "priceCurrency": "CNY"},
+        }
+        json_ld = [json_ld, app_ld] if not isinstance(json_ld, list) else json_ld + [app_ld]
+    ld_block = "".join(
+        '<script type="application/ld+json">' + json.dumps(x, ensure_ascii=False) + "</script>"
+        for x in (json_ld if isinstance(json_ld, list) else [json_ld])
+    )
+
     tags = "".join(f'<span class="tag">{escape(t)}</span>' for t in (meta.get("tags") or []))
     content = f"""
 <nav class="breadcrumb"><a href="/">首页</a> <span>/</span> <span>{escape(meta.get('category', '文章'))}</span></nav>
@@ -178,14 +230,14 @@ def render_article_page(article: dict, site: dict) -> str:
     <h1>{escape(meta['title'])}</h1>
     <div class="post-meta"><time>{meta.get('date', '')}</time>{tags}</div>
   </header>
-  <div class="post-body">{body_html}</div>
+  <div class="post-body">{widget_html}{body_html}</div>
 </article>
 <section class="related">
   <h2>相关阅读</h2>
   <p><a href="/">返回首页查看其他文章</a></p>
 </section>"""
     return page_wrap(meta["title"], content, site, canonical=canonical,
-                     description=meta.get("summary", ""), extra_head=script)
+                     description=meta.get("summary", ""), extra_head=ld_block + tool_script)
 
 
 # ---------------- 站点文件 ----------------
@@ -231,7 +283,27 @@ nav a:hover,nav a.active{color:var(--accent)}
 .site-footer{border-top:1px solid var(--line);background:#fff;color:var(--muted);font-size:13px;padding:26px 0;margin-top:40px}
 .site-footer p{margin:4px 0}
 .site-footer a{color:var(--accent);text-decoration:none}
-@media(max-width:640px){.post{padding:20px}.hero h1{font-size:26px}}"""
+.tool-widget{background:linear-gradient(135deg,#eff6ff,#f9fafb);border:1px solid var(--line);border-radius:14px;padding:22px 24px;margin:8px 0 26px}
+.tool-head strong{display:block;font-size:18px;color:var(--ink);margin-bottom:4px}
+.tool-head p{margin:0 0 14px;color:var(--muted);font-size:14px}
+.tool-form{display:flex;flex-wrap:wrap;gap:14px 18px;align-items:flex-end}
+.field{display:flex;flex-direction:column;gap:5px;min-width:130px;flex:1 1 130px}
+.field label{font-size:13px;color:var(--muted)}
+.field input,.field select{padding:9px 10px;border:1px solid var(--line);border-radius:8px;font-size:15px;background:#fff;color:var(--ink)}
+.tool-btn{background:var(--accent);color:#fff;border:none;border-radius:8px;padding:10px 22px;font-size:15px;cursor:pointer;height:40px}
+.tool-btn:hover{filter:brightness(1.05)}
+.tool-result{display:none;margin-top:18px;padding-top:16px;border-top:1px dashed var(--line)}
+.tool-primary{font-size:30px;font-weight:700;color:var(--accent);line-height:1.2}
+.tool-primary .u{font-size:15px;color:var(--muted);font-weight:400;margin-left:6px}
+.tool-rows{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;margin:12px 0 0;font-size:14px}
+.tool-rows dt{color:var(--muted)}
+.tool-rows dd{margin:0;color:var(--ink)}
+.tool-table{border-collapse:collapse;width:100%;margin:6px 0;font-size:14px}
+.tool-table th,.tool-table td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+.tool-table th{background:#f9fafb}
+.tool-note{color:var(--muted);font-size:13px;margin:10px 0 0}
+.tool-disclaimer{margin-top:14px;font-size:13px;color:#b45309;background:#fffbeb;border:1px solid #fde68a;border-radius:8px;padding:8px 12px}
+@media(max-width:640px){.post{padding:20px}.hero h1{font-size:26px}.tool-primary{font-size:24px}}"""
 
 
 def render_privacy_page(site: dict) -> str:
@@ -300,6 +372,7 @@ def build(domain: str | None = None) -> Path:
     site_url = (domain or site.get("url", "https://example.com")).rstrip("/")
     site = dict(site, url=site_url)
 
+    registry = load_registry()
     articles = read_articles()
     SITE_DIR.mkdir(parents=True, exist_ok=True)
 
@@ -318,10 +391,11 @@ def build(domain: str | None = None) -> Path:
         meta = a["meta"]
         page_dir = SITE_DIR / meta["slug"]
         page_dir.mkdir(parents=True, exist_ok=True)
-        (page_dir / "index.html").write_text(render_article_page(a, site), encoding="utf-8")
+        (page_dir / "index.html").write_text(render_article_page(a, site, registry), encoding="utf-8")
 
     write_static_files(site, site_url)
     write_sitemap(articles, site_url)
+    copy_tool_assets(SITE_DIR)
 
     # 隐私政策页（AdSense / 百度联盟 审核硬性要求）
     (SITE_DIR / "privacy").mkdir(parents=True, exist_ok=True)

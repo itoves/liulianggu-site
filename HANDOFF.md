@@ -1,7 +1,7 @@
 # HANDOFF · 01-SEO内容站（自动运营机器人）
 
 > 本文件用于「接力」项目：任何接手或下次打开会话的人，先读这个，再动手。
-> 最后更新：2026-10-13
+> 最后更新：2026-10-14
 
 ---
 
@@ -10,6 +10,18 @@
 用 AI 批量生成「小而实用」的中文内容页（计算器 / 单位换算 / 攻略 / FAQ），构建成**零成本静态站**，靠 AdSense / 国内联盟的广告点击与展示分成赚钱。全流程已搭好：选题 → 生成 → 构建 → 部署 → 提交收录。
 
 目标（README）：单站先发到 100 篇优质页面，日 UV 500~2000，月广告收入 ¥300~1500；跑通后复制成站群。
+
+## 0.5 重大变更：内容站 → 工具站（混合模式，2026-10-14 已落地）
+
+用户 critique 原 AI 文章内容"不太行"（文章写"输入点击计算"却无真实工具，意图错配）。已决定转型**工具站**：每个页面 = 真实可交互 JS 工具 + 精简说明 + FAQ。
+
+- `tools/registry.json`：58 个选题映射为 calculator(50) / converter(8) 三类，含 inputs/units/公式说明，金融/健康/法务类带 `disclaimer`。
+- `tools/tools.js`：计算引擎（ESM，浏览器/Node 共用）+ DOM 挂载 + 表单渲染；公式手写、不靠 AI、不做 eval。
+- `tools/tests/tools.test.mjs`：**27 个 node 单元测试全绿**，覆盖所有计算器已知答案（BMI/房贷/复利/个税/税率/体脂…）与"58 工具均可调用"。
+- `build_site.py` 改造：`load_registry` + `copy_tool_assets` + 在文章正文顶部注入 `<div class="tool-widget">` + 复制 `site/assets/tools.js`+`registry.json` + 工具页补 `SoftwareApplication` 结构化数据。
+- 已 `build_site.py --domain https://liulianggu.site` 重建：58 个页面含工具容器，资产就位。
+- **待办**：推送 main 触发 GitHub Pages CI 重新部署；浏览器实测各工具交互；后续把 58 篇正文按工具站风格精简（砍"如何使用"注水段）。
+- ⚠️ 公式正确性以 `node --test tools/tests/` 为准；改公式务必先跑测试。
 
 ---
 

@@ -1,0 +1,595 @@
+{
+  "房贷利率计算器": {
+    "id": "mortgage", "type": "calculator", "title": "房贷利率计算器",
+    "intro": "输入贷款金额、年利率与年限，计算每月还款额与总利息。",
+    "disclaimer": true,
+    "inputs": [
+      {"key": "amount", "label": "贷款总额", "unit": "万元", "default": 100, "min": 1, "max": 5000, "step": 1},
+      {"key": "rate", "label": "年利率", "unit": "%", "default": 3.95, "min": 0.1, "max": 15, "step": 0.01},
+      {"key": "years", "label": "贷款年限", "unit": "年", "default": 30, "min": 1, "max": 40, "step": 1},
+      {"key": "method", "label": "还款方式", "type": "select", "options": ["等额本息", "等额本金"], "default": "等额本息"}
+    ],
+    "note": "等额本息：每月还款额固定；等额本金：每月本金固定、利息递减。"
+  },
+  "公积金贷款计算器": {
+    "id": "mortgage", "type": "calculator", "title": "公积金贷款计算器",
+    "intro": "按公积金贷款利率估算每月还款与总利息。",
+    "disclaimer": true,
+    "inputs": [
+      {"key": "amount", "label": "贷款总额", "unit": "万元", "default": 60, "min": 1, "max": 200, "step": 1},
+      {"key": "rate", "label": "年利率", "unit": "%", "default": 2.85, "min": 0.1, "max": 10, "step": 0.01},
+      {"key": "years", "label": "贷款年限", "unit": "年", "default": 30, "min": 1, "max": 40, "step": 1},
+      {"key": "method", "label": "还款方式", "type": "select", "options": ["等额本息", "等额本金"], "default": "等额本息"}
+    ],
+    "note": "公积金利率通常低于商业贷款，具体以当地政策为准。"
+  },
+  "复利计算器": {
+    "id": "compound", "type": "calculator", "title": "复利计算器",
+    "intro": "计算本金在复利下的到期本息与收益。",
+    "disclaimer": true,
+    "inputs": [
+      {"key": "principal", "label": "本金", "unit": "元", "default": 10000, "min": 1, "max": 100000000, "step": 100},
+      {"key": "rate", "label": "年化收益率", "unit": "%", "default": 5, "min": 0, "max": 100, "step": 0.1},
+      {"key": "years", "label": "年限", "unit": "年", "default": 10, "min": 1, "max": 100, "step": 1},
+      {"key": "freq", "label": "每年复利次数", "unit": "次", "default": 12, "min": 1, "max": 365, "step": 1}
+    ],
+    "note": "到期本息 = 本金 × (1 + 年化%/次数)^(次数×年限)"
+  },
+  "年化收益率计算器": {
+    "id": "annualized", "type": "calculator", "title": "年化收益率计算器",
+    "intro": "根据投入与最终金额反推年化收益率。",
+    "disclaimer": true,
+    "inputs": [
+      {"key": "start", "label": "期初金额", "unit": "元", "default": 10000, "min": 1, "max": 100000000, "step": 100},
+      {"key": "end", "label": "期末金额", "unit": "元", "default": 15000, "min": 1, "max": 100000000, "step": 100},
+      {"key": "years", "label": "持有年限", "unit": "年", "default": 3, "min": 0.1, "max": 100, "step": 0.1}
+    ],
+    "note": "年化收益率 = (期末/期初)^(1/年限) - 1"
+  },
+  "基金定投收益计算器": {
+    "id": "sip", "type": "calculator", "title": "基金定投收益计算器",
+    "intro": "估算每月定投在复利下的本金与收益。",
+    "disclaimer": true,
+    "inputs": [
+      {"key": "pmt", "label": "每期投入", "unit": "元", "default": 1000, "min": 1, "max": 1000000, "step": 100},
+      {"key": "rate", "label": "年化收益率", "unit": "%", "default": 8, "min": 0, "max": 100, "step": 0.5},
+      {"key": "months", "label": "定投期数", "unit": "个月", "default": 60, "min": 1, "max": 600, "step": 1}
+    ],
+    "note": "按月末定投估算；到期总额 = 每期投入 × [((1+月利率)^期数 - 1) / 月利率]"
+  },
+  "个人所得税计算器": {
+    "id": "tax_personal", "type": "calculator", "title": "个人所得税计算器（综合所得·月度估算）",
+    "intro": "估算工资薪金的每月预扣个税与税后收入。",
+    "disclaimer": true,
+    "inputs": [
+      {"key": "salary", "label": "月度税前工资", "unit": "元", "default": 20000, "min": 0, "max": 1000000, "step": 500},
+      {"key": "insurance", "label": "五险一金(月度)", "unit": "元", "default": 3000, "min": 0, "max": 50000, "step": 100},
+      {"key": "special", "label": "专项附加扣除(月度)", "unit": "元", "default": 2000, "min": 0, "max": 50000, "step": 100}
+    ],
+    "note": "按月度累计预扣法简化估算，未含年终奖单独计税，实际以个税APP为准。"
+  },
+  "存款利息计算器": {
+    "id": "deposit", "type": "calculator", "title": "存款利息计算器",
+    "intro": "计算定期存款的利息与到期本息。",
+    "disclaimer": true,
+    "inputs": [
+      {"key": "principal", "label": "本金", "unit": "元", "default": 50000, "min": 1, "max": 100000000, "step": 1000},
+      {"key": "rate", "label": "年利率", "unit": "%", "default": 1.5, "min": 0, "max": 20, "step": 0.01},
+      {"key": "years", "label": "存期", "unit": "年", "default": 1, "min": 0.1, "max": 50, "step": 0.1}
+    ],
+    "note": "到期利息 = 本金 × 年利率 × 存期（按单利估算）"
+  },
+  "装修预算计算器": {
+    "id": "renovation_budget", "type": "calculator", "title": "装修预算计算器",
+    "intro": "按面积与档次估算装修总预算。",
+    "inputs": [
+      {"key": "area", "label": "建筑面积", "unit": "㎡", "default": 89, "min": 10, "max": 1000, "step": 1},
+      {"key": "tier", "label": "装修档次", "type": "select", "options": ["简装(800元/㎡)", "中档(1500元/㎡)", "精装(2500元/㎡)", "豪装(4000元/㎡)"], "default": "中档(1500元/㎡)"}
+    ],
+    "note": "预算 = 面积 × 每平米单价，含基础施工与主材，不含家具家电。"
+  },
+  "墙砖数量计算器": {
+    "id": "tiles", "type": "calculator", "title": "墙砖数量计算器",
+    "intro": "估算墙面铺砖所需砖块数量（含损耗）。",
+    "inputs": [
+      {"key": "wallArea", "label": "墙面面积", "unit": "㎡", "default": 30, "min": 1, "max": 1000, "step": 1},
+      {"key": "tileW", "label": "砖长", "unit": "cm", "default": 30, "min": 5, "max": 120, "step": 1},
+      {"key": "tileH", "label": "砖宽", "unit": "cm", "default": 60, "min": 5, "max": 120, "step": 1},
+      {"key": "waste", "label": "损耗率", "unit": "%", "default": 5, "min": 0, "max": 30, "step": 1}
+    ],
+    "note": "单砖面积 = 长×宽；砖数 = 墙面积 ÷ 单砖面积 × (1 + 损耗率)"
+  },
+  "乳胶漆用量计算器": {
+    "id": "paint", "type": "calculator", "title": "乳胶漆用量计算器",
+    "intro": "估算墙面涂刷所需乳胶漆升数。",
+    "inputs": [
+      {"key": "area", "label": "涂刷面积", "unit": "㎡", "default": 80, "min": 1, "max": 5000, "step": 1},
+      {"key": "coats", "label": "涂刷遍数", "unit": "遍", "default": 2, "min": 1, "max": 5, "step": 1},
+      {"key": "coverage", "label": "每升涂刷面积", "unit": "㎡/L", "default": 10, "min": 1, "max": 30, "step": 0.5}
+    ],
+    "note": "用量(升) = 面积 × 遍数 ÷ 每升涂刷面积 × 1.1（含损耗）"
+  },
+  "窗帘尺寸计算器": {
+    "id": "curtain", "type": "calculator", "title": "窗帘尺寸计算器",
+    "intro": "按窗宽与褶皱倍数计算所需布料宽度。",
+    "inputs": [
+      {"key": "width", "label": "窗宽", "unit": "cm", "default": 200, "min": 30, "max": 1000, "step": 5},
+      {"key": "ratio", "label": "褶皱倍数", "unit": "倍", "default": 2, "min": 1.5, "max": 3, "step": 0.1},
+      {"key": "height", "label": "窗帘高度", "unit": "cm", "default": 260, "min": 50, "max": 500, "step": 5}
+    ],
+    "note": "布料宽 = 窗宽 × 褶皱倍数；建议两侧各加 10~20cm 富余。"
+  },
+  "装修工期规划指南": {
+    "id": "renovation_schedule", "type": "calculator", "title": "装修工期规划计算器",
+    "intro": "按面积与工种估算大致装修工期。",
+    "inputs": [
+      {"key": "area", "label": "建筑面积", "unit": "㎡", "default": 89, "min": 10, "max": 1000, "step": 1},
+      {"key": "complex", "label": "复杂程度", "type": "select", "options": ["简单", "中等", "复杂"], "default": "中等"}
+    ],
+    "note": "仅为经验估算，实际受施工队、定制周期影响。"
+  },
+  "瓷砖美缝用量计算": {
+    "id": "grout", "type": "calculator", "title": "瓷砖美缝用量计算器",
+    "intro": "估算瓷砖美缝剂所需用量。",
+    "inputs": [
+      {"key": "area", "label": "铺贴面积", "unit": "㎡", "default": 20, "min": 1, "max": 2000, "step": 1},
+      {"key": "tileW", "label": "砖长", "unit": "cm", "default": 80, "min": 5, "max": 120, "step": 1},
+      {"key": "tileH", "label": "砖宽", "unit": "cm", "default": 80, "min": 5, "max": 120, "step": 1},
+      {"key": "depth", "label": "缝深", "unit": "mm", "default": 3, "min": 1, "max": 10, "step": 1}
+    ],
+    "note": "按每㎡砖缝体积估算，结果约为参考用量。"
+  },
+  "预产期计算器": {
+    "id": "due_date", "type": "calculator", "title": "预产期计算器",
+    "intro": "根据末次月经日期推算预产期与当前孕周。",
+    "disclaimer": true,
+    "inputs": [
+      {"key": "lmp", "label": "末次月经日期", "type": "date"}
+    ],
+    "note": "预产期 = 末次月经 + 280 天（40 周），仅供孕期参考。"
+  },
+  "宝宝身高体重标准对照": {
+    "id": "baby_growth", "type": "calculator", "title": "宝宝身高体重标准对照",
+    "disclaimer": true,
+    "intro": "输入月龄与性别，查看 WHO 儿童生长标准区间。",
+    "inputs": [
+      {"key": "months", "label": "月龄", "unit": "月", "default": 6, "min": 0, "max": 60, "step": 1},
+      {"key": "sex", "label": "性别", "type": "select", "options": ["男", "女"], "default": "男"}
+    ],
+    "note": "参考 WHO 0–5 岁儿童生长标准（±1 SD 区间），个体差异请咨询儿保医生。"
+  },
+  "宝宝疫苗接种时间表": {
+    "id": "vaccine", "type": "calculator", "title": "宝宝疫苗接种时间表",
+    "disclaimer": true,
+    "intro": "输入宝宝月龄，查看对应年龄段的一类疫苗。",
+    "inputs": [
+      {"key": "months", "label": "宝宝月龄", "unit": "月", "default": 2, "min": 0, "max": 72, "step": 1}
+    ],
+    "note": "依据国家免疫规划（一类疫苗）整理，具体以当地接种门诊安排为准。"
+  },
+  "辅食添加顺序指南": {
+    "id": "baby_food", "type": "calculator", "title": "辅食添加顺序指南",
+    "disclaimer": true,
+    "intro": "输入月龄，查看该阶段可尝试添加的辅食。",
+    "inputs": [
+      {"key": "months", "label": "宝宝月龄", "unit": "月", "default": 6, "min": 4, "max": 24, "step": 1}
+    ],
+    "note": "一般建议满 6 月龄起逐步添加辅食，逐一尝试观察过敏。"
+  },
+  "孕期体重增长标准": {
+    "id": "preg_weight", "type": "calculator", "title": "孕期体重增长标准",
+    "disclaimer": true,
+    "intro": "按孕前 BMI 与当前孕周，查看建议增重范围。",
+    "inputs": [
+      {"key": "preBmi", "label": "孕前 BMI", "unit": "", "default": 21, "min": 15, "max": 40, "step": 0.1},
+      {"key": "week", "label": "当前孕周", "unit": "周", "default": 20, "min": 1, "max": 42, "step": 1}
+    ],
+    "note": "参考 IOM 孕期增重建议，仅作大致区间。"
+  },
+  "汇率换算": {
+    "id": "converter", "type": "converter", "title": "汇率换算",
+    "intro": "多币种金额换算（汇率为参考值，请以银行实时汇率为准）。",
+    "disclaimer": true,
+    "units": [
+      {"name": "人民币(CNY)", "factor": 1},
+      {"name": "美元(USD)", "factor": 7.10},
+      {"name": "欧元(EUR)", "factor": 7.70},
+      {"name": "日元(JPY)", "factor": 0.047},
+      {"name": "英镑(GBP)", "factor": 9.00},
+      {"name": "港币(HKD)", "factor": 0.91}
+    ],
+    "defaultFrom": "美元(USD)", "defaultTo": "人民币(CNY)"
+  },
+  "温度单位换算": {
+    "id": "temperature", "type": "calculator", "title": "温度单位换算",
+    "intro": "摄氏度 / 华氏度 / 开尔文 互转。",
+    "inputs": [
+      {"key": "value", "label": "数值", "unit": "", "default": 25, "min": -273.15, "max": 10000, "step": 0.1},
+      {"key": "from", "label": "从", "type": "select", "options": ["°C", "°F", "K"], "default": "°C"}
+    ],
+    "note": "°C→°F: F=C×9/5+32；°C→K: K=C+273.15"
+  },
+  "尺寸单位换算": {
+    "id": "converter", "type": "converter", "title": "尺寸单位换算",
+    "intro": "常用长度单位互转。",
+    "units": [
+      {"name": "米(m)", "factor": 1},
+      {"name": "厘米(cm)", "factor": 0.01},
+      {"name": "毫米(mm)", "factor": 0.001},
+      {"name": "千米(km)", "factor": 1000},
+      {"name": "英寸(in)", "factor": 0.0254},
+      {"name": "英尺(ft)", "factor": 0.3048},
+      {"name": "码(yd)", "factor": 0.9144},
+      {"name": "英里(mi)", "factor": 1609.344}
+    ],
+    "defaultFrom": "厘米(cm)", "defaultTo": "英寸(in)"
+  },
+  "面积单位换算": {
+    "id": "converter", "type": "converter", "title": "面积单位换算",
+    "intro": "常用面积单位互转。",
+    "units": [
+      {"name": "平方米(㎡)", "factor": 1},
+      {"name": "平方厘米(c㎡)", "factor": 0.0001},
+      {"name": "平方千米(k㎡)", "factor": 1000000},
+      {"name": "公顷(ha)", "factor": 10000},
+      {"name": "亩", "factor": 666.6667},
+      {"name": "平方英尺(sq ft)", "factor": 0.092903},
+      {"name": "平方码(sq yd)", "factor": 0.836127},
+      {"name": "英亩(acre)", "factor": 4046.856}
+    ],
+    "defaultFrom": "平方米(㎡)", "defaultTo": "亩"
+  },
+  "BMI 体重指数计算器": {
+    "id": "bmi", "type": "calculator", "title": "BMI 体重指数计算器",
+    "disclaimer": true,
+    "intro": "输入身高体重，计算 BMI 并判断体重分类。",
+    "inputs": [
+      {"key": "heightCm", "label": "身高", "unit": "cm", "default": 170, "min": 50, "max": 250, "step": 0.1},
+      {"key": "weightKg", "label": "体重", "unit": "kg", "default": 65, "min": 2, "max": 300, "step": 0.1}
+    ],
+    "note": "BMI = 体重(kg) ÷ 身高(m)²；中国标准：<18.5 偏瘦，18.5–23.9 正常，24–27.9 超重，≥28 肥胖。"
+  },
+  "基础代谢率计算器": {
+    "id": "bmr", "type": "calculator", "title": "基础代谢率(BMR)计算器",
+    "disclaimer": true,
+    "intro": "用 Mifflin-St Jeor 公式估算每日基础代谢。",
+    "inputs": [
+      {"key": "sex", "label": "性别", "type": "select", "options": ["男", "女"], "default": "男"},
+      {"key": "age", "label": "年龄", "unit": "岁", "default": 30, "min": 1, "max": 120, "step": 1},
+      {"key": "heightCm", "label": "身高", "unit": "cm", "default": 170, "min": 50, "max": 250, "step": 0.1},
+      {"key": "weightKg", "label": "体重", "unit": "kg", "default": 65, "min": 2, "max": 300, "step": 0.1}
+    ],
+    "note": "男: 10×kg+6.25×cm−5×岁+5；女: 10×kg+6.25×cm−5×岁−161"
+  },
+  "孕周计算器": {
+    "id": "pregnancy_week", "type": "calculator", "title": "孕周计算器",
+    "disclaimer": true,
+    "intro": "根据末次月经或预产期，推算当前孕周。",
+    "inputs": [
+      {"key": "lmp", "label": "末次月经日期", "type": "date"}
+    ],
+    "note": "孕周 = (今天 − 末次月经) ÷ 7，向上取整到整周。"
+  },
+  "排卵期计算器": {
+    "id": "ovulation", "type": "calculator", "title": "排卵期计算器",
+    "disclaimer": true,
+    "intro": "根据末次月经与周期长度估算排卵日与易孕窗口。",
+    "inputs": [
+      {"key": "lmp", "label": "末次月经日期", "type": "date"},
+      {"key": "cycle", "label": "月经周期", "unit": "天", "default": 28, "min": 20, "max": 45, "step": 1}
+    ],
+    "note": "排卵日 ≈ 下次月经 −14 天；易孕窗口为排卵日前 5 天至后 1 天。"
+  },
+  "体脂率计算器": {
+    "id": "bodyfat", "type": "calculator", "title": "体脂率计算器",
+    "disclaimer": true,
+    "intro": "用 Deurenberg 公式估算体脂率。",
+    "inputs": [
+      {"key": "sex", "label": "性别", "type": "select", "options": ["男", "女"], "default": "男"},
+      {"key": "age", "label": "年龄", "unit": "岁", "default": 30, "min": 1, "max": 120, "step": 1},
+      {"key": "heightCm", "label": "身高", "unit": "cm", "default": 170, "min": 50, "max": 250, "step": 0.1},
+      {"key": "weightKg", "label": "体重", "unit": "kg", "default": 65, "min": 2, "max": 300, "step": 0.1}
+    ],
+    "note": "BF% ≈ 1.20×BMI + 0.23×年龄 − 10.8×性别(男1/女0) − 5.4；仅为估算。"
+  },
+  "每日饮水量计算器": {
+    "id": "water", "type": "calculator", "title": "每日饮水量计算器",
+    "intro": "按体重与活动量估算每日建议饮水量。",
+    "inputs": [
+      {"key": "weightKg", "label": "体重", "unit": "kg", "default": 65, "min": 2, "max": 300, "step": 1},
+      {"key": "activity", "label": "活动强度", "type": "select", "options": ["久坐", "中等", "高强度"], "default": "中等"}
+    ],
+    "note": "基础 30–35 mL/kg，高强度额外 +5~10 mL/kg。"
+  },
+  "卡路里消耗计算器": {
+    "id": "calories_burn", "type": "calculator", "title": "卡路里消耗计算器",
+    "intro": "按运动类型与时长估算热量消耗。",
+    "inputs": [
+      {"key": "weightKg", "label": "体重", "unit": "kg", "default": 65, "min": 2, "max": 300, "step": 1},
+      {"key": "activity", "label": "运动类型", "type": "select", "options": ["步行(3.5)", "慢跑(7)", "骑行(6)", "游泳(7)", "跳绳(10)", "瑜伽(2.5)"], "default": "慢跑(7)"},
+      {"key": "minutes", "label": "时长", "unit": "分钟", "default": 30, "min": 1, "max": 600, "step": 5}
+    ],
+    "note": "热量(kcal) ≈ MET × 3.5 × 体重kg ÷ 200 × 分钟；括号内为 MET 值。"
+  },
+  "食物热量对照表": {
+    "id": "food_calorie", "type": "calculator", "title": "常见食物热量对照",
+    "intro": "查看每 100g 常见食物的热量近似值。",
+    "inputs": [
+      {"key": "query", "label": "筛选(留空看全部)", "type": "select", "options": ["全部", "主食", "蛋白类", "蔬菜", "水果", "零食"], "default": "全部"}
+    ],
+    "note": "数据为每 100g 可食部近似热量(kcal)，仅供参考。"
+  },
+  "烘焙单位换算": {
+    "id": "converter", "type": "converter", "title": "烘焙单位换算",
+    "intro": "体积与重量常用烘焙单位互转。",
+    "units": [
+      {"name": "毫升(mL)", "factor": 1},
+      {"name": "升(L)", "factor": 1000},
+      {"name": "茶匙(tsp)", "factor": 4.92892},
+      {"name": "汤匙(tbsp)", "factor": 14.7868},
+      {"name": "杯(cup)", "factor": 236.588}
+    ],
+    "defaultFrom": "杯(cup)", "defaultTo": "毫升(mL)"
+  },
+  "每日蛋白质摄入计算器": {
+    "id": "protein", "type": "calculator", "title": "每日蛋白质摄入计算器",
+    "intro": "按体重与目标估算每日蛋白质需求。",
+    "inputs": [
+      {"key": "weightKg", "label": "体重", "unit": "kg", "default": 65, "min": 2, "max": 300, "step": 1},
+      {"key": "goal", "label": "目标", "type": "select", "options": ["减脂(1.6g/kg)", "维持(1.2g/kg)", "增肌(2.0g/kg)"], "default": "维持(1.2g/kg)"}
+    ],
+    "note": "需求 = 体重 × 系数；健身人群可上浮。"
+  },
+  "减糖饮食替换指南": {
+    "id": "sugar_replace", "type": "calculator", "title": "减糖饮食替换指南",
+    "intro": "查看高糖食物的更优替换建议。",
+    "inputs": [
+      {"key": "query", "label": "类别", "type": "select", "options": ["全部", "饮品", "零食", "主食", "调味"], "default": "全部"}
+    ],
+    "note": "建议以天然、低 GI 食物替代添加糖。"
+  },
+  "时差计算器": {
+    "id": "timezone", "type": "calculator", "title": "时差计算器",
+    "intro": "计算跨时区出发时间对应的目的地当地时刻。",
+    "inputs": [
+      {"key": "fromTz", "label": "出发地时区", "type": "select", "options": ["UTC+8 北京", "UTC+0 伦敦", "UTC+1 柏林/巴黎", "UTC-5 纽约", "UTC-8 洛杉矶", "UTC+9 东京"], "default": "UTC+8 北京"},
+      {"key": "toTz", "label": "目的地时区", "type": "select", "options": ["UTC+8 北京", "UTC+0 伦敦", "UTC+1 柏林/巴黎", "UTC-5 纽约", "UTC-8 洛杉矶", "UTC+9 东京"], "default": "UTC-5 纽约"},
+      {"key": "hour", "label": "出发时刻(小时0-23)", "unit": "时", "default": 9, "min": 0, "max": 23, "step": 1}
+    ],
+    "note": "结果 = 出发时刻 + (目的地 − 出发地) 时差，跨日自动 ±24。"
+  },
+  "公里英里换算": {
+    "id": "converter", "type": "converter", "title": "公里 / 英里换算",
+    "intro": "公里与英里互转。",
+    "units": [
+      {"name": "公里(km)", "factor": 1},
+      {"name": "英里(mi)", "factor": 1.609344},
+      {"name": "米(m)", "factor": 0.001}
+    ],
+    "defaultFrom": "公里(km)", "defaultTo": "英里(mi)"
+  },
+  "飞行里程换算": {
+    "id": "converter", "type": "converter", "title": "飞行里程换算",
+    "intro": "公里 / 英里 / 海里 互转（航空常用）。",
+    "units": [
+      {"name": "公里(km)", "factor": 1},
+      {"name": "英里(mi)", "factor": 1.609344},
+      {"name": "海里(nmi)", "factor": 1.852}
+    ],
+    "defaultFrom": "公里(km)", "defaultTo": "海里(nmi)"
+  },
+  "各国电压插头对照": {
+    "id": "voltage", "type": "calculator", "title": "各国电压插头对照",
+    "intro": "查询常见国家/地区的电压与插头标准。",
+    "inputs": [
+      {"key": "query", "label": "地区", "type": "select", "options": ["美国", "英国", "欧盟", "日本", "澳大利亚", "中国", "韩国"], "default": "美国"}
+    ],
+    "note": "出行前请确认电器是否支持当地电压，必要时带转换插头。"
+  },
+  "旅行预算计算器": {
+    "id": "travel_budget", "type": "calculator", "title": "旅行预算计算器",
+    "intro": "按天数与各项标准估算旅行总花费。",
+    "inputs": [
+      {"key": "days", "label": "天数", "unit": "天", "default": 5, "min": 1, "max": 365, "step": 1},
+      {"key": "food", "label": "每日餐费", "unit": "元/天", "default": 150, "min": 0, "max": 5000, "step": 10},
+      {"key": "hotel", "label": "住宿", "unit": "元/晚", "default": 300, "min": 0, "max": 20000, "step": 10},
+      {"key": "transport", "label": "交通合计", "unit": "元", "default": 1000, "min": 0, "max": 200000, "step": 50},
+      {"key": "ticket", "label": "门票/活动", "unit": "元", "default": 500, "min": 0, "max": 100000, "step": 50}
+    ],
+    "note": "总预算 = 餐费×天数 + 住宿×天数 + 交通 + 门票；建议预留 10% 机动。"
+  },
+  "GPA 换算器": {
+    "id": "gpa", "type": "calculator", "title": "GPA 换算器",
+    "intro": "百分制成绩与 4.0 制 GPA 互转（标准算法）。",
+    "inputs": [
+      {"key": "score", "label": "百分制成绩", "unit": "分", "default": 85, "min": 0, "max": 100, "step": 1}
+    ],
+    "note": "GPA = (百分制 − 50) ÷ 10，低于 60 记 0；不同学校算法不同。"
+  },
+  "百分制等级换算": {
+    "id": "score_grade", "type": "calculator", "title": "百分制等级换算",
+    "intro": "将分数转换为等级评定。",
+    "inputs": [
+      {"key": "score", "label": "分数", "unit": "分", "default": 85, "min": 0, "max": 100, "step": 1}
+    ],
+    "note": "≥90 优秀 / 80–89 良好 / 60–79 及格 / <60 不及格。"
+  },
+  "考试倒计时计算器": {
+    "id": "countdown", "type": "calculator", "title": "考试倒计时计算器",
+    "intro": "输入考试日期，计算剩余天数。",
+    "inputs": [
+      {"key": "exam", "label": "考试日期", "type": "date"}
+    ],
+    "note": "剩余天数 = 考试日期 − 今天。"
+  },
+  "雅思托福分数对照": {
+    "id": "ielts_toefl", "type": "calculator", "title": "雅思 / 托福分数对照",
+    "intro": "查看雅思与托福 iBT 的近似分数对应。",
+    "inputs": [
+      {"key": "query", "label": "查看", "type": "select", "options": ["对照表", "雅思6.5对应", "雅思7.0对应", "雅思6.0对应"], "default": "对照表"}
+    ],
+    "note": "分数为近似对应，具体以官方换算表为准。"
+  },
+  "像素与打印尺寸换算": {
+    "id": "px_print", "type": "calculator", "title": "像素与打印尺寸换算",
+    "intro": "按 DPI 将像素换算为厘米 / 英寸。",
+    "inputs": [
+      {"key": "px", "label": "像素", "unit": "px", "default": 300, "min": 1, "max": 20000, "step": 1},
+      {"key": "dpi", "label": "分辨率", "unit": "DPI", "default": 300, "min": 72, "max": 1200, "step": 1}
+    ],
+    "note": "厘米 = 像素 ÷ (DPI ÷ 2.54)；英寸 = 像素 ÷ DPI。"
+  },
+  "文件大小单位换算": {
+    "id": "converter", "type": "converter", "title": "文件大小单位换算",
+    "intro": "字节与常用存储单位互转（1KB=1024B）。",
+    "units": [
+      {"name": "字节(B)", "factor": 1},
+      {"name": "KB", "factor": 1024},
+      {"name": "MB", "factor": 1048576},
+      {"name": "GB", "factor": 1073741824},
+      {"name": "TB", "factor": 1099511627776}
+    ],
+    "defaultFrom": "MB", "defaultTo": "GB"
+  },
+  "网速单位换算": {
+    "id": "converter", "type": "converter", "title": "网速单位换算",
+    "intro": "比特与字节速率单位互转。",
+    "units": [
+      {"name": "bps", "factor": 1},
+      {"name": "Kbps", "factor": 1000},
+      {"name": "Mbps", "factor": 1000000},
+      {"name": "Gbps", "factor": 1000000000},
+      {"name": "B/s", "factor": 8},
+      {"name": "KB/s", "factor": 8192},
+      {"name": "MB/s", "factor": 8388608}
+    ],
+    "defaultFrom": "Mbps", "defaultTo": "MB/s"
+  },
+  "屏幕分辨率对照": {
+    "id": "resolution", "type": "calculator", "title": "常见屏幕分辨率对照",
+    "intro": "查看常见分辨率的标准名称、比例与像素数。",
+    "inputs": [
+      {"key": "query", "label": "查看", "type": "select", "options": ["全部", "FHD 1080p", "2K QHD", "4K UHD", "720p"], "default": "全部"}
+    ],
+    "note": "比例为宽:高，像素数 = 宽 × 高。"
+  },
+  "时薪换算器": {
+    "id": "hourly", "type": "calculator", "title": "时薪换算器",
+    "intro": "根据月薪与出勤估算时薪。",
+    "inputs": [
+      {"key": "monthly", "label": "月薪", "unit": "元", "default": 8000, "min": 0, "max": 1000000, "step": 100},
+      {"key": "days", "label": "每月工作天数", "unit": "天", "default": 21.75, "min": 1, "max": 31, "step": 0.25},
+      {"key": "hours", "label": "每天工时", "unit": "小时", "default": 8, "min": 1, "max": 24, "step": 0.5}
+    ],
+    "note": "时薪 = 月薪 ÷ (工作天数 × 每天工时)。"
+  },
+  "加班费计算器": {
+    "id": "overtime", "type": "calculator", "title": "加班费计算器",
+    "intro": "按小时工资与倍数估算加班费。",
+    "inputs": [
+      {"key": "hourly", "label": "小时工资", "unit": "元/时", "default": 50, "min": 0, "max": 2000, "step": 1},
+      {"key": "hours", "label": "加班时长", "unit": "小时", "default": 10, "min": 0, "max": 200, "step": 1},
+      {"key": "mult", "label": "倍数", "type": "select", "options": ["1.5 倍(休息日)", "2 倍(法定假日)", "3 倍(法定假日不足补休)"], "default": "1.5 倍(休息日)"}
+    ],
+    "note": "加班费 = 小时工资 × 倍数 × 加班时长（依据劳动法估算）。"
+  },
+  "年终奖个税计算器": {
+    "id": "year_end_bonus", "type": "calculator", "title": "年终奖个税计算器",
+    "intro": "按全年一次性奖金单独计税估算个税与税后。",
+    "disclaimer": true,
+    "inputs": [
+      {"key": "bonus", "label": "年终奖金额", "unit": "元", "default": 30000, "min": 0, "max": 10000000, "step": 1000}
+    ],
+    "note": "将奖金 ÷12 找月度税率表，个税 = 奖金 × 税率 − 速算扣除数（单独计税政策，以最新规定为准）。"
+  },
+  "五险一金计算指南": {
+    "id": "social_insurance", "type": "calculator", "title": "五险一金计算指南",
+    "disclaimer": true,
+    "intro": "按缴费基数估算个人与单位五险一金。",
+    "inputs": [
+      {"key": "base", "label": "缴费基数", "unit": "元", "default": 10000, "min": 1000, "max": 50000, "step": 100},
+      {"key": "city", "label": "城市参考", "type": "select", "options": ["一般城市(养老8%/医疗2%/失业0.5%/公积金12%)", "上海(养老8%/医疗2%/失业0.5%/公积金7%)", "深圳(养老8%/医疗2%/失业0.5%/公积金5%)"], "default": "一般城市(养老8%/医疗2%/失业0.5%/公积金12%)"}
+    ],
+    "note": "个人合计约基数×22.5%；单位比例更高。比例为常见参考，以当地政策为准。"
+  },
+  "房间地砖数量计算器": {
+    "id": "floor_tiles", "type": "calculator", "title": "房间地砖数量计算器",
+    "intro": "估算地面铺砖所需砖块数（含损耗）。",
+    "inputs": [
+      {"key": "area", "label": "房间面积", "unit": "㎡", "default": 20, "min": 1, "max": 1000, "step": 1},
+      {"key": "tileW", "label": "砖长", "unit": "cm", "default": 80, "min": 5, "max": 120, "step": 1},
+      {"key": "tileH", "label": "砖宽", "unit": "cm", "default": 80, "min": 5, "max": 120, "step": 1},
+      {"key": "waste", "label": "损耗率", "unit": "%", "default": 5, "min": 0, "max": 30, "step": 1}
+    ],
+    "note": "砖数 = 面积 ÷ (砖长×砖宽) × (1 + 损耗率)"
+  },
+  "油漆用量计算器": {
+    "id": "paint", "type": "calculator", "title": "油漆用量计算器",
+    "intro": "估算室内墙面/顶面油漆用量。",
+    "inputs": [
+      {"key": "area", "label": "涂刷面积", "unit": "㎡", "default": 60, "min": 1, "max": 5000, "step": 1},
+      {"key": "coats", "label": "涂刷遍数", "unit": "遍", "default": 2, "min": 1, "max": 5, "step": 1},
+      {"key": "coverage", "label": "每升涂刷面积", "unit": "㎡/L", "default": 10, "min": 1, "max": 30, "step": 0.5}
+    ],
+    "note": "用量(升) = 面积 × 遍数 ÷ 每升涂刷面积 × 1.1（含损耗）"
+  },
+  "水电费估算器": {
+    "id": "utility", "type": "calculator", "title": "水电费估算器",
+    "intro": "按用量估算每月水电费。",
+    "inputs": [
+      {"key": "elecKwh", "label": "月用电量", "unit": "kWh", "default": 200, "min": 0, "max": 100000, "step": 10},
+      {"key": "waterT", "label": "月用水量", "unit": "吨", "default": 10, "min": 0, "max": 10000, "step": 1},
+      {"key": "elecPrice", "label": "电价", "unit": "元/kWh", "default": 0.55, "min": 0, "max": 5, "step": 0.01},
+      {"key": "waterPrice", "label": "水价", "unit": "元/吨", "default": 3.5, "min": 0, "max": 20, "step": 0.1}
+    ],
+    "note": "电费 = 电量 × 电价；水费 = 水量 × 水价（此处按均价估算，未计阶梯）。"
+  },
+  "衣物尺码对照": {
+    "id": "clothing_size", "type": "calculator", "title": "衣物尺码对照",
+    "intro": "查看男女装国标与国标的近似尺码对照。",
+    "inputs": [
+      {"key": "sex", "label": "性别", "type": "select", "options": ["男", "女"], "default": "男"},
+      {"key": "size", "label": "尺码", "type": "select", "options": ["S", "M", "L", "XL", "XXL"], "default": "L"}
+    ],
+    "note": "仅作近似参考，不同品牌差异较大。"
+  },
+  "退休年龄计算器": {
+    "id": "retirement_age", "type": "calculator", "title": "退休年龄计算器",
+    "disclaimer": true,
+    "intro": "按渐进式延迟退休政策估算法定退休年龄。",
+    "inputs": [
+      {"key": "sex", "label": "性别", "type": "select", "options": ["男", "女(干部/灵活就业)", "女(工人)"], "default": "男"},
+      {"key": "birthYear", "label": "出生年份", "unit": "年", "default": 1975, "min": 1960, "max": 2010, "step": 1}
+    ],
+    "note": "按 2025 起渐进式延迟退休：男逐步至 63，女干部至 58，女工人至 55。结果为近似，以官方为准。"
+  },
+  "产假天数计算器": {
+    "id": "maternity_leave", "type": "calculator", "title": "产假天数计算器",
+    "disclaimer": true,
+    "intro": "估算女职工产假天数。",
+    "inputs": [
+      {"key": "provinceAdd", "label": "省增假", "type": "select", "options": ["60天(多数省)", "30天(部分省)", "无额外"], "default": "60天(多数省)"},
+      {"key": "hard", "label": "是否难产", "type": "select", "options": ["否", "是(+15天)"], "default": "否"},
+      {"key": "multi", "label": "多胞胎每多一婴", "type": "select", "options": ["0", "1(+15天)", "2(+30天)"], "default": "0"}
+    ],
+    "note": "基础 98 天 + 省增假 + 难产 15 + 每多婴 15（以当地规定为准）。"
+  },
+  "社保缴费年限查询": {
+    "id": "social_years", "type": "calculator", "title": "社保最低缴费年限查询",
+    "disclaimer": true,
+    "intro": "查询按月领取养老金的最低缴费年限。",
+    "inputs": [
+      {"key": "retireYear", "label": "预计退休年份", "unit": "年", "default": 2045, "min": 2025, "max": 2060, "step": 1}
+    ],
+    "note": "按渐进式：2030 前 15 年，之后逐年提高至 20 年（以官方为准）。"
+  },
+  "诉讼时效期限对照": {
+    "id": "lawsuit", "type": "calculator", "title": "诉讼时效期限对照",
+    "disclaimer": true,
+    "intro": "查看常见纠纷的诉讼时效期间。",
+    "inputs": [
+      {"key": "query", "label": "纠纷类型", "type": "select", "options": ["普通民事纠纷", "借款/买卖", "人身损害", "国际货物买卖", "不动产物权"], "default": "普通民事纠纷"}
+    ],
+    "note": "一般诉讼时效 3 年；特殊情形依《民法典》规定。"
+  }
+}
