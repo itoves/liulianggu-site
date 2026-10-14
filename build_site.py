@@ -376,11 +376,14 @@ def build(domain: str | None = None) -> Path:
     articles = read_articles()
     SITE_DIR.mkdir(parents=True, exist_ok=True)
 
-    # 清理站点里已不存在的文章目录，避免旧页面残留
+    # 清理站点里已不存在的文章目录，避免旧页面残留（单个失败不阻塞构建）
     current_slugs = {a["meta"]["slug"] for a in articles}
     for child in SITE_DIR.iterdir():
         if child.is_dir() and (child / "index.html").exists() and child.name not in current_slugs:
-            shutil.rmtree(child)
+            try:
+                shutil.rmtree(child)
+            except OSError:
+                pass  # 目录被占用/权限受限时跳过，不影响本次生成
 
     (SITE_DIR / "index.html").write_text(
         page_wrap(site.get("name", "我的工具站"), render_home(articles, site), site,

@@ -532,10 +532,10 @@ export function mountTool(container, config) {
   }
 }
 
-// 自动挂载页面上所有 [data-tool-id]
+// 自动挂载页面上所有 [data-tool-keyword]（由 build_site.py 注入）
 export function autoMount(registry) {
   if (typeof document === "undefined") return;
-  document.querySelectorAll("[data-tool-id]").forEach((el) => {
+  document.querySelectorAll("[data-tool-keyword]").forEach((el) => {
     const key = el.getAttribute("data-tool-keyword");
     const config = registry[key];
     if (config) mountTool(el, config);
