@@ -89,6 +89,37 @@ def copy_tool_assets(site_dir: Path) -> None:
         shutil.copyfile(reg, assets / "registry.json")
 
 
+def load_verification_head() -> str:
+    """读取 verification.json，生成搜索引擎验证 meta 与 AdSense 脚本，注入每个页面 <head>。
+
+    字段（留空则不注入）：
+      google  - Google Search Console 的 content（meta google-site-verification）
+      bing    - Bing Webmaster 的 content（meta msvalidate.01）
+      baidu   - 百度搜索资源平台的 content（meta baidu-site-verification）
+      adsense - AdSense 客户端 ID，如 ca-pub-XXXXXXXXXXXXXX（注入广告脚本）
+    """
+    vp = PROJECT_ROOT / "verification.json"
+    if not vp.exists():
+        return ""
+    try:
+        v = json.loads(vp.read_text(encoding="utf-8"))
+    except Exception:
+        return ""
+    tags = []
+    if v.get("google"):
+        tags.append(f'<meta name="google-site-verification" content="{escape(str(v["google"]))}">')
+    if v.get("bing"):
+        tags.append(f'<meta name="msvalidate.01" content="{escape(str(v["bing"]))}">')
+    if v.get("baidu"):
+        tags.append(f'<meta name="baidu-site-verification" content="{escape(str(v["baidu"]))}">')
+    if v.get("adsense"):
+        tags.append(
+            '<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js'
+            f'?client={escape(str(v["adsense"]))}" crossorigin="anonymous"></script>'
+        )
+    return "\n".join(tags)
+
+
 # ---------------- 渲染 ----------------
 
 def render_article_html(article: dict) -> str:
@@ -126,6 +157,7 @@ def page_wrap(title: str, content_html: str, site: dict, canonical: str = "", de
 <meta property="og:site_name" content="{escape(site.get('name', ''))}">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="/style.css">
+{load_verification_head()}
 {extra_head}
 </head>
 <body>
@@ -377,9 +409,14 @@ def build(domain: str | None = None) -> Path:
     SITE_DIR.mkdir(parents=True, exist_ok=True)
 
     # 清理站点里已不存在的文章目录，避免旧页面残留（单个失败不阻塞构建）
-    current_slugs = {a["meta"]["slug"] for a in articles}
+    # 跳过 privacy/assets：二者每次构建都会重新生成，无需先删
+    current_slugs = {a["meta"]["slug"] for a in articles} | {"privacy"}
     for child in SITE_DIR.iterdir():
-        if child.is_dir() and (child / "index.html").exists() and child.name not in current_slugs:
+        if (
+            child.is_dir()
+            and (child / "index.html").exists()
+            and child.name not in current_slugs
+        ):
             try:
                 shutil.rmtree(child)
             except OSError:
