@@ -19,11 +19,11 @@ json_ld:
   dateModified: '2026-10-12'
   author:
     '@type': Organization
-    name: 我的工具站
+    name: 流量谷
   publisher:
     '@type': Organization
-    name: 我的工具站
-  mainEntityOfPage: https://example.com/gong-li-ying-li-huan-suan-kuai-su-zhuan-huan-fang-fa-gong-yu/
+    name: 流量谷
+  mainEntityOfPage: https://liulianggu.site/gong-li-ying-li-huan-suan-kuai-su-zhuan-huan-fang-fa-gong-yu/
   inLanguage: zh-CN
   keywords: 公里英里换算,单位转换,出行工具,距离换算
   mainEntity:
@@ -78,9 +78,7 @@ json_ld:
 - **公里转英里**：公里数 ÷ 2，再加上结果的 1/4。例如 100 公里 → 50 + 12.5 = 62.5 英里（精确值 62.14，误差很小）。
 - **英里转公里**：英里数 × 1.6，再减去英里数的 1%。例如 50 英里 → 80 - 0.5 = 79.5 公里（精确值 80.47）。
 
-如果经常需要换算，可以直接用[在线公里英里换算工具](https://example.com)，输入数字即时出结果，比手算稳。
-
-## 常用距离对照表（建议收藏）
+如果经常需要换算，可以直接用在线公里英里换算工具，输入数字即时出结果，比手算稳。
 
 | 公里 (km) | 英里 (mi) | 说明 |
 |-----------|-----------|------|
@@ -123,4 +121,4 @@ json_ld:
 
 ## 总结
 
-公里英里换算的核心就两个数：**0.62 和 1.61**。记住方向别搞反——公里变英里乘 0.62，英里变公里乘 1.61。配合上面的对照表和心算技巧，出行、跑步、看导航基本不会再出错。需要频繁换算时，直接用[公里英里换算器](https://example.com)更省事。
+公里英里换算的核心就两个数：**0.62 和 1.61**。记住方向别搞反——公里变英里乘 0.62，英里变公里乘 1.61。配合上面的对照表和心算技巧，出行、跑步、看导航基本不会再出错。需要频繁换算时，直接用公里英里换算器更省事。

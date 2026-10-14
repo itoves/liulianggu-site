@@ -19,11 +19,11 @@ json_ld:
   dateModified: '2026-10-12'
   author:
     '@type': Organization
-    name: 我的工具站
+    name: 流量谷
   publisher:
     '@type': Organization
-    name: 我的工具站
-  mainEntityOfPage: https://example.com/ji-chu-dai-xie-lu-ji-suan-qi-zai-xian-suan-mei-ri-ji-chu-dai/
+    name: 流量谷
+  mainEntityOfPage: https://liulianggu.site/ji-chu-dai-xie-lu-ji-suan-qi-zai-xian-suan-mei-ri-ji-chu-dai/
   inLanguage: zh-CN
   keywords: 基础代谢率,BMR计算,热量需求,健康工具
   mainEntity:
@@ -60,7 +60,7 @@ json_ld:
 
 基础代谢率（BMR）是你躺着不动时，身体维持呼吸、心跳、体温等基本生命活动所消耗的热量。它通常占每日总消耗的60%~70%，是制定减脂、增肌或维持体重计划的基础。手动套公式容易算错，用基础代谢率计算器输入身高、体重、年龄和性别，几秒就能得到结果。
 
-如果你还想知道加上日常活动后一天实际消耗多少，可以继续用总消耗（TDEE）估算。本站的[每日热量需求计算器](https://example.com/tdee)能直接结合运动频率给出答案；而想了解不同运动消耗多少，可以查看[运动热量消耗表](https://example.com/exercise-calories)。
+如果你还想知道加上日常活动后一天实际消耗多少，可以继续用总消耗（TDEE）估算。本站的每日热量需求计算器能直接结合运动频率给出答案；而想了解不同运动消耗多少，可以查看运动热量消耗表。
 
 ## 主流BMR公式与结果解读
 
@@ -88,7 +88,7 @@ json_ld:
 2. **维持**：每日摄入 = BMR × 活动系数。
 3. **增肌**：每日摄入 = BMR × 活动系数 + 200~300 kcal，同时保证蛋白质每公斤体重1.6~2.2g。
 
-具体执行时，可以先用基础代谢率计算器得到BMR，再结合[蛋白质摄入计算器](https://example.com/protein)分配三大营养素。如果体重两周没变化，再微调100~200 kcal。
+具体执行时，可以先用基础代谢率计算器得到BMR，再结合蛋白质摄入计算器分配三大营养素。如果体重两周没变化，再微调100~200 kcal。
 
 ## 使用步骤与注意事项
 
@@ -107,4 +107,4 @@ json_ld:
 - 体重每周固定时间、空腹、排便后测量更准。
 - 不要长期低于BMR进食，容易引发疲劳、脱发、月经紊乱。
 
-如果你还想知道食物热量，可参考[常见食物热量表](https://example.com/food-calories)搭配使用。
+如果你还想知道食物热量，可参考常见食物热量表搭配使用。

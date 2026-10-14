@@ -19,11 +19,11 @@ json_ld:
   dateModified: '2026-10-12'
   author:
     '@type': Organization
-    name: 我的工具站
+    name: 流量谷
   publisher:
     '@type': Organization
-    name: 我的工具站
-  mainEntityOfPage: https://example.com/lu-xing-yu-suan-ji-suan-qi-zen-yao-yong-shou-ba-shou-jiao-ni/
+    name: 流量谷
+  mainEntityOfPage: https://liulianggu.site/lu-xing-yu-suan-ji-suan-qi-zen-yao-yong-shou-ba-shou-jiao-ni/
   inLanguage: zh-CN
   keywords: 旅行预算,出行工具,费用计算,自由行攻略
   mainEntity:
@@ -116,20 +116,3 @@ json_ld:
 - **留出 10% 应急金**：计算器默认包含，但很多人会手动删掉，建议保留。
 - **大交通单独查**：计算器给的是均价，旺季机票可能翻倍，最好手动填入实际票价。
 - **按天拆分餐饮**：把总餐饮除以天数，再对比当地物价，能快速判断预算是否合理。
-
-## 常见问题 FAQ
-
-**Q：旅行预算计算器算出来的数字准吗？**
-A：它是一个估算工具，准确度取决于你输入的信息。按我们样本，合理使用后偏差约 11%，比凭感觉估算准得多。
-
-**Q：跟团游也能用吗？**
-A：可以。把团费填入“大交通+住宿+门票”合并项，再单独计算餐饮和购物即可。
-
-**Q：境外旅行支持吗？**
-A：支持。选择目的地后，计算器会自动按汇率换算成人民币，你也可以手动切换币种。
-
-**Q：预算超了怎么办？**
-A：优先压缩住宿和餐饮档次，其次减少收费景点，最后才动应急金。
-
-**Q：需要注册才能用吗？**
-A：不需要。所有计算在本地浏览器完成，不上传数据。

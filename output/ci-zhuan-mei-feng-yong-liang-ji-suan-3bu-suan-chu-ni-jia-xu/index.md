@@ -20,11 +20,11 @@ json_ld:
   dateModified: '2026-10-12'
   author:
     '@type': Organization
-    name: 我的工具站
+    name: 流量谷
   publisher:
     '@type': Organization
-    name: 我的工具站
-  mainEntityOfPage: https://example.com/ci-zhuan-mei-feng-yong-liang-ji-suan-3bu-suan-chu-ni-jia-xu/
+    name: 流量谷
+  mainEntityOfPage: https://liulianggu.site/ci-zhuan-mei-feng-yong-liang-ji-suan-3bu-suan-chu-ni-jia-xu/
   inLanguage: zh-CN
   keywords: 瓷砖美缝,用量计算,装修材料,美缝剂,施工技巧
   mainEntity:

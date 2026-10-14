@@ -19,11 +19,11 @@ json_ld:
   dateModified: '2026-10-12'
   author:
     '@type': Organization
-    name: 我的工具站
+    name: 流量谷
   publisher:
     '@type': Organization
-    name: 我的工具站
-  mainEntityOfPage: https://example.com/ya-si-tuo-fu-fen-shu-dui-zhao-yi-zhang-biao-kan-dong-huan-xi/
+    name: 流量谷
+  mainEntityOfPage: https://liulianggu.site/ya-si-tuo-fu-fen-shu-dui-zhao-yi-zhang-biao-kan-dong-huan-xi/
   inLanguage: zh-CN
   keywords: 雅思,托福,分数对照,留学考试
   mainEntity:
@@ -107,12 +107,3 @@ json_ld:
 - 每周做一套完整模考，记录分数变化。
 - 针对弱项专项突破，比如写作或口语。
 - 利用对照表定期检查进度。
-
-## 常见问题与避坑指南
-
-- **不要直接线性换算**：比如雅思 6.5 不是托福 65 分，必须查表。
-- **单项要求可能更高**：有些学校要求雅思写作 6.5，但总分只要求 6.5，这时托福写作需达到 24 左右。
-- **成绩有效期**：两者都是 2 年，但部分院校要求申请时成绩在有效期内，规划好考试时间。
-- **拼分政策**：托福有 MyBest Scores，雅思有单项重考（One Skill Retake），可关注官方最新政策。
-
-如果你还在犹豫考哪个，不妨先做一套官方免费模考，感受一下题型和节奏。记住，**分数对照只是参考，真正决定录取的是你的综合实力**。

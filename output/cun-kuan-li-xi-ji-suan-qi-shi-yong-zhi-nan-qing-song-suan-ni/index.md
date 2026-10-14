@@ -19,11 +19,11 @@ json_ld:
   dateModified: '2026-08-18'
   author:
     '@type': Organization
-    name: 我的工具站
+    name: 流量谷
   publisher:
     '@type': Organization
-    name: 我的工具站
-  mainEntityOfPage: https://example.com/cun-kuan-li-xi-ji-suan-qi-shi-yong-zhi-nan-qing-song-suan-ni/
+    name: 流量谷
+  mainEntityOfPage: https://liulianggu.site/cun-kuan-li-xi-ji-suan-qi-shi-yong-zhi-nan-qing-song-suan-ni/
   inLanguage: zh-CN
   keywords: 存款利息,利息计算器,定期存款,活期存款
   mainEntity:
@@ -123,6 +123,3 @@ json_ld:
 2. **比较银行间的利率差异**：A银行定期1年利率1.65%，B银行1.75%，存10万差100元，值得跨行比较。
 3. **评估提前支取的损失**：如果临时要用钱，提前取出定期，计算一下改成活期后利息损失多少，再决定是否动用这笔钱。
 
-## 最后提醒
-
-存款利息计算器只是一个**估算工具**，实际结息金额可能因银行具体规则（如每月20日结息、逢闰年等）略有浮动。建议你在存款前，用计算器得出理论值，再向银行客户经理确认最终利率和结息规则。这样既不会被复杂计算弄晕，也不会被低息存款“坑”到。

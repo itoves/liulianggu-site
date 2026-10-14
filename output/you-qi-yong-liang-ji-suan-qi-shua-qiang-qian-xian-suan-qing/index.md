@@ -20,11 +20,11 @@ json_ld:
   dateModified: '2026-10-12'
   author:
     '@type': Organization
-    name: 我的工具站
+    name: 流量谷
   publisher:
     '@type': Organization
-    name: 我的工具站
-  mainEntityOfPage: https://example.com/you-qi-yong-liang-ji-suan-qi-shua-qiang-qian-xian-suan-qing/
+    name: 流量谷
+  mainEntityOfPage: https://liulianggu.site/you-qi-yong-liang-ji-suan-qi-shua-qiang-qian-xian-suan-qing/
   inLanguage: zh-CN
   keywords: 油漆用量计算器,装修计算,刷墙,涂料用量,居家工具
   mainEntity:

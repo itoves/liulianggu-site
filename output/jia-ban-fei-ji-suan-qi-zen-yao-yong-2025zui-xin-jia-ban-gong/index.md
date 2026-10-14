@@ -20,11 +20,11 @@ json_ld:
   dateModified: '2026-10-12'
   author:
     '@type': Organization
-    name: 我的工具站
+    name: 流量谷
   publisher:
     '@type': Organization
-    name: 我的工具站
-  mainEntityOfPage: https://example.com/jia-ban-fei-ji-suan-qi-zen-yao-yong-2025zui-xin-jia-ban-gong/
+    name: 流量谷
+  mainEntityOfPage: https://liulianggu.site/jia-ban-fei-ji-suan-qi-zen-yao-yong-2025zui-xin-jia-ban-gong/
   inLanguage: zh-CN
   keywords: 加班费计算器,加班工资,劳动法,职场工具,工资计算
   mainEntity:
@@ -100,17 +100,3 @@ json_ld:
 - **休息日调休后没有加班费**：如果公司安排了同等时间调休，休息日加班可以不付 2 倍工资，但工作日和法定节假日不行。
 
 如果你不确定自己的情况，可以先用计算器算出理论值，再和工资条对比，差额就是可能被少算的部分。
-
-## 常见问题
-
-**Q1：加班费计算器算出来的结果就是我能拿到的钱吗？**
-A：不一定。计算器按法定标准算，实际发放取决于公司是否合规。如果公司基数低于你的正常工资，实际会少。
-
-**Q2：月薪里包含绩效和补贴，加班费基数怎么算？**
-A：一般以劳动合同约定的正常工作时间工资为准，通常包括基本工资和固定津贴，不含年终奖、报销等。具体可咨询当地劳动部门。
-
-**Q3：法定节假日加班，公司只给调休合法吗？**
-A：不合法。法定节假日必须支付不低于 3 倍工资，不能以调休代替。
-
-**Q4：加班费计算器支持按小时、按天混合计算吗？**
-A：支持。你可以分别输入不同日期类型的小时数，工具会分段计算后汇总。

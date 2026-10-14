@@ -21,11 +21,11 @@ json_ld:
   dateModified: '2026-10-12'
   author:
     '@type': Organization
-    name: 我的工具站
+    name: 流量谷
   publisher:
     '@type': Organization
-    name: 我的工具站
-  mainEntityOfPage: https://example.com/wang-su-dan-wei-huan-suan-mbps-mb-s-gb-dao-di-zen-yao-huan/
+    name: 流量谷
+  mainEntityOfPage: https://liulianggu.site/wang-su-dan-wei-huan-suan-mbps-mb-s-gb-dao-di-zen-yao-huan/
   inLanguage: zh-CN
   keywords: 网速单位换算,Mbps,MB/s,宽带测速,数码工具
   mainEntity:
@@ -109,7 +109,7 @@ json_ld:
 
 ### 第 3 步：用工具验证
 
-如果你懒得算，可以直接用在线换算工具。比如在 **我的工具站** 的「网速单位换算」页面输入数值，一键得到结果，还能顺便换算 Kbps、KB/s 等。
+如果你懒得算，可以直接用在线换算工具。比如在 **流量谷** 的「网速单位换算」页面输入数值，一键得到结果，还能顺便换算 Kbps、KB/s 等。
 
 ## 容易混淆的 3 个坑
 

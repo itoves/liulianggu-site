@@ -19,11 +19,11 @@ json_ld:
   dateModified: '2026-10-12'
   author:
     '@type': Organization
-    name: 我的工具站
+    name: 流量谷
   publisher:
     '@type': Organization
-    name: 我的工具站
-  mainEntityOfPage: https://example.com/wen-jian-da-xiao-dan-wei-huan-suan-kb-mb-gb-tb-dao-di-zen/
+    name: 流量谷
+  mainEntityOfPage: https://liulianggu.site/wen-jian-da-xiao-dan-wei-huan-suan-kb-mb-gb-tb-dao-di-zen/
   inLanguage: zh-CN
   keywords: 文件大小单位换算,KB MB GB TB,存储容量换算,数据单位
   mainEntity:
@@ -89,17 +89,7 @@ json_ld:
 
 **实用技巧**：如果只是判断“能不能存下”，用 1000 估算更快，结果偏保守，不会出错。
 
-## 常见问题与避坑指南
-
-### 为什么手机显示“可用空间 12.3GB”，实际能存的文件却更少？
-
-因为系统本身占用一部分空间，且文件系统有簇大小限制。一个 1KB 的文件可能占用 4KB 物理空间。
-
-### 下载速度 Mbps 和文件大小 MB 怎么换算？
-
-网络带宽单位是 **Mbps（兆比特每秒）**，文件大小是 **MB（兆字节）**。1 Byte = 8 bit，所以 100Mbps 宽带的理论最大下载速度是 100 ÷ 8 = 12.5MB/s。下载一个 1GB 文件，理想时间约 1024 ÷ 12.5 ≈ 82 秒。
-
-## 快速换算参考表
+速换算参考表
 
 | 文件大小 | 约等于 | 能存多少张 5MB 照片 |
 |----------|--------|---------------------|

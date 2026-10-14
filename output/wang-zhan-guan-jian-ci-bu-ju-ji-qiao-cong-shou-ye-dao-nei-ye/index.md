@@ -19,11 +19,11 @@ json_ld:
   dateModified: '2026-08-14'
   author:
     '@type': Organization
-    name: 我的工具站
+    name: 流量谷
   publisher:
     '@type': Organization
-    name: 我的工具站
-  mainEntityOfPage: https://example.com/wang-zhan-guan-jian-ci-bu-ju-ji-qiao-cong-shou-ye-dao-nei-ye/
+    name: 流量谷
+  mainEntityOfPage: https://liulianggu.site/wang-zhan-guan-jian-ci-bu-ju-ji-qiao-cong-shou-ye-dao-nei-ye/
   inLanguage: zh-CN
   keywords: 关键词布局,SEO技巧,网站优化,关键词密度
   mainEntity:

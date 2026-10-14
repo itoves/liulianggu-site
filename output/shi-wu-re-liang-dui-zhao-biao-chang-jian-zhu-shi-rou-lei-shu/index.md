@@ -19,11 +19,11 @@ json_ld:
   dateModified: '2026-10-12'
   author:
     '@type': Organization
-    name: 我的工具站
+    name: 流量谷
   publisher:
     '@type': Organization
-    name: 我的工具站
-  mainEntityOfPage: https://example.com/shi-wu-re-liang-dui-zhao-biao-chang-jian-zhu-shi-rou-lei-shu/
+    name: 流量谷
+  mainEntityOfPage: https://liulianggu.site/shi-wu-re-liang-dui-zhao-biao-chang-jian-zhu-shi-rou-lei-shu/
   inLanguage: zh-CN
   keywords: 食物热量对照表,热量查询,饮食健康,减肥
   mainEntity:
@@ -103,20 +103,3 @@ json_ld:
 - **注意生熟差异**：100克生米煮成饭约250克，热量不变但重量变了。查表时先确认是生重还是熟重。
 - **烹饪方式优先**：蒸、煮、烤的热量接近食材本身；油炸、红烧、糖醋可能让热量翻倍。比如100克蒸土豆81 kcal，炸薯条则超过300 kcal。
 - **别只看热量**：同样热量的坚果和糖果，饱腹感、营养密度完全不同。热量表是参考，不是唯一标准。
-
-## 常见问题（FAQ）
-
-**Q1：食物热量对照表里的热量是生重还是熟重？**
-A：表中已标注。米饭、馒头等主食通常为熟重，燕麦、肉类多为生重。使用前先看备注列，没有备注的默认按常见状态。
-
-**Q2：为什么同一食物不同来源的热量数值不一样？**
-A：品种、产地、加工方式、含水量都会影响。比如鸡胸肉带皮和不带皮能差30 kcal以上。选一个可靠来源固定使用即可，不必纠结个位数差异。
-
-**Q3：只靠热量表能减肥吗？**
-A：热量表帮你控制总摄入，但减肥还需要考虑蛋白质、膳食纤维和运动。建议把热量表当作工具，而不是唯一依据。
-
-**Q4：蔬菜热量那么低，是不是可以随便吃？**
-A：蔬菜本身热量低，但烹饪用油、沙拉酱、芝麻酱会大幅增加热量。一盘清炒蔬菜可能因为15克油多出135 kcal。
-
-**Q5：在哪里能快速查到更多食物热量？**
-A：可以收藏本站的食物热量对照表页面，后续会陆续补充常见外卖、零食和地方菜的热量数据。

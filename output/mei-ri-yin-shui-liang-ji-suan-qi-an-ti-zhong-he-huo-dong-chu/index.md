@@ -20,11 +20,11 @@ json_ld:
   dateModified: '2026-10-12'
   author:
     '@type': Organization
-    name: 我的工具站
+    name: 流量谷
   publisher:
     '@type': Organization
-    name: 我的工具站
-  mainEntityOfPage: https://example.com/mei-ri-yin-shui-liang-ji-suan-qi-an-ti-zhong-he-huo-dong-chu/
+    name: 流量谷
+  mainEntityOfPage: https://liulianggu.site/mei-ri-yin-shui-liang-ji-suan-qi-an-ti-zhong-he-huo-dong-chu/
   inLanguage: zh-CN
   keywords: 每日饮水量,健康饮水,补水计算,水分摄入,运动补水
   mainEntity:

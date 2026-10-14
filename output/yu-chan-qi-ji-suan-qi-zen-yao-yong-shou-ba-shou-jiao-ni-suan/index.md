@@ -18,11 +18,11 @@ json_ld:
   dateModified: '2026-10-12'
   author:
     '@type': Organization
-    name: 我的工具站
+    name: 流量谷
   publisher:
     '@type': Organization
-    name: 我的工具站
-  mainEntityOfPage: https://example.com/yu-chan-qi-ji-suan-qi-zen-yao-yong-shou-ba-shou-jiao-ni-suan/
+    name: 流量谷
+  mainEntityOfPage: https://liulianggu.site/yu-chan-qi-ji-suan-qi-zen-yao-yong-shou-ba-shou-jiao-ni-suan/
   inLanguage: zh-CN
   keywords: 预产期计算器,孕期计算,母婴工具
   mainEntity:

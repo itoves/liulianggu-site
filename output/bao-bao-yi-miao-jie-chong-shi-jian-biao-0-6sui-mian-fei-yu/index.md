@@ -19,11 +19,11 @@ json_ld:
   dateModified: '2026-10-12'
   author:
     '@type': Organization
-    name: 我的工具站
+    name: 流量谷
   publisher:
     '@type': Organization
-    name: 我的工具站
-  mainEntityOfPage: https://example.com/bao-bao-yi-miao-jie-chong-shi-jian-biao-0-6sui-mian-fei-yu/
+    name: 流量谷
+  mainEntityOfPage: https://liulianggu.site/bao-bao-yi-miao-jie-chong-shi-jian-biao-0-6sui-mian-fei-yu/
   inLanguage: zh-CN
   keywords: 宝宝疫苗,接种时间表,母婴健康,育儿知识
   mainEntity:
@@ -93,12 +93,3 @@ json_ld:
 1. 在接种点留观30分钟，无异常再离开。
 2. 24小时内避免洗澡，保持接种部位清洁。
 3. 轻微发热（<38.5℃）、局部红肿属常见反应，可物理降温、多喝水；若高热不退或出现抽搐、呼吸困难，立即就医。
-
-## 常见问题与避坑指南
-
-- **错过接种时间怎么办？** 尽快补种，一般无需重新开始全程，具体补种方案咨询接种门诊。
-- **免费和自费疫苗可以同时打吗？** 多数可以，但需医生评估，通常建议不同部位接种。
-- **接种后发烧要吃退烧药吗？** 体温超过38.5℃或宝宝明显不适时，可按剂量使用对乙酰氨基酚或布洛芬。
-- **不同城市时间表有差异吗？** 有，部分疫苗（如乙脑、甲肝）有减毒和灭活两种，程序不同，以当地门诊为准。
-
-建议家长收藏这份**宝宝疫苗接种时间表**，并设置手机提醒，确保宝宝及时获得保护。

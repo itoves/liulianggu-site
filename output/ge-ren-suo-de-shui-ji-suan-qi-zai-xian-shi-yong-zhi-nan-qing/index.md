@@ -20,11 +20,11 @@ json_ld:
   dateModified: '2026-08-18'
   author:
     '@type': Organization
-    name: 我的工具站
+    name: 流量谷
   publisher:
     '@type': Organization
-    name: 我的工具站
-  mainEntityOfPage: https://example.com/ge-ren-suo-de-shui-ji-suan-qi-zai-xian-shi-yong-zhi-nan-qing/
+    name: 流量谷
+  mainEntityOfPage: https://liulianggu.site/ge-ren-suo-de-shui-ji-suan-qi-zai-xian-shi-yong-zhi-nan-qing/
   inLanguage: zh-CN
   keywords: 个人所得税,个税计算器,工资扣税,专项附加扣除,个税税率表
 ---

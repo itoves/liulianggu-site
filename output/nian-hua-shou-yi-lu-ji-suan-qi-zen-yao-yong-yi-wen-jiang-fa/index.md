@@ -19,11 +19,11 @@ json_ld:
   dateModified: '2026-08-18'
   author:
     '@type': Organization
-    name: 我的工具站
+    name: 流量谷
   publisher:
     '@type': Organization
-    name: 我的工具站
-  mainEntityOfPage: https://example.com/nian-hua-shou-yi-lu-ji-suan-qi-zen-yao-yong-yi-wen-jiang-fa/
+    name: 流量谷
+  mainEntityOfPage: https://liulianggu.site/nian-hua-shou-yi-lu-ji-suan-qi-zen-yao-yong-yi-wen-jiang-fa/
   inLanguage: zh-CN
   keywords: 年化收益率,理财计算,投资工具,收益率计算
   mainEntity:

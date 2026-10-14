@@ -20,11 +20,11 @@ json_ld:
   dateModified: '2026-10-12'
   author:
     '@type': Organization
-    name: 我的工具站
+    name: 流量谷
   publisher:
     '@type': Organization
-    name: 我的工具站
-  mainEntityOfPage: https://example.com/xiang-su-yu-da-yin-chi-cun-huan-suan-yi-zhang-tu-kan-dong-lu/
+    name: 流量谷
+  mainEntityOfPage: https://liulianggu.site/xiang-su-yu-da-yin-chi-cun-huan-suan-yi-zhang-tu-kan-dong-lu/
   inLanguage: zh-CN
   keywords: 像素换算,打印尺寸,DPI,分辨率,图像处理
   mainEntity:

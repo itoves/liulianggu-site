@@ -19,11 +19,11 @@ json_ld:
   dateModified: '2026-10-12'
   author:
     '@type': Organization
-    name: 我的工具站
+    name: 流量谷
   publisher:
     '@type': Organization
-    name: 我的工具站
-  mainEntityOfPage: https://example.com/chan-jia-tian-shu-ji-suan-qi-2024zui-xin-chan-jia-tian-shu/
+    name: 流量谷
+  mainEntityOfPage: https://liulianggu.site/chan-jia-tian-shu-ji-suan-qi-2024zui-xin-chan-jia-tian-shu/
   inLanguage: zh-CN
   keywords: 产假天数计算器,产假计算,生育津贴,女职工权益
   mainEntity:

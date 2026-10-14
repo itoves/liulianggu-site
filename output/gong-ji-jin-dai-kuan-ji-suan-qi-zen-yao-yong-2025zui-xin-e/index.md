@@ -19,11 +19,11 @@ json_ld:
   dateModified: '2026-08-18'
   author:
     '@type': Organization
-    name: 我的工具站
+    name: 流量谷
   publisher:
     '@type': Organization
-    name: 我的工具站
-  mainEntityOfPage: https://example.com/gong-ji-jin-dai-kuan-ji-suan-qi-zen-yao-yong-2025zui-xin-e/
+    name: 流量谷
+  mainEntityOfPage: https://liulianggu.site/gong-ji-jin-dai-kuan-ji-suan-qi-zen-yao-yong-2025zui-xin-e/
   inLanguage: zh-CN
   keywords: 公积金贷款,贷款计算器,月供计算,房贷利率
   mainEntity:

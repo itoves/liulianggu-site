@@ -19,11 +19,11 @@ json_ld:
   dateModified: '2026-08-18'
   author:
     '@type': Organization
-    name: 我的工具站
+    name: 流量谷
   publisher:
     '@type': Organization
-    name: 我的工具站
-  mainEntityOfPage: https://example.com/fu-li-ji-suan-qi-zen-yao-yong-yi-wen-kan-dong-ben-jin-li-lu/
+    name: 流量谷
+  mainEntityOfPage: https://liulianggu.site/fu-li-ji-suan-qi-zen-yao-yong-yi-wen-kan-dong-ben-jin-li-lu/
   inLanguage: zh-CN
   keywords: 复利计算器,复利公式,理财工具,投资计算
   mainEntity:

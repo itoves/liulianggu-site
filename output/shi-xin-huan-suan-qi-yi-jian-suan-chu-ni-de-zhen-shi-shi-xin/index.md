@@ -19,11 +19,11 @@ json_ld:
   dateModified: '2026-10-12'
   author:
     '@type': Organization
-    name: 我的工具站
+    name: 流量谷
   publisher:
     '@type': Organization
-    name: 我的工具站
-  mainEntityOfPage: https://example.com/shi-xin-huan-suan-qi-yi-jian-suan-chu-ni-de-zhen-shi-shi-xin/
+    name: 流量谷
+  mainEntityOfPage: https://liulianggu.site/shi-xin-huan-suan-qi-yi-jian-suan-chu-ni-de-zhen-shi-shi-xin/
   inLanguage: zh-CN
   keywords: 时薪换算,工资计算,职场工具,薪资分析
   mainEntity:
@@ -106,8 +106,6 @@ json_ld:
 4. **勾选附加项**：是否计入加班、通勤、午休。
 5. **点击计算**：立即得到时薪，并显示计算公式。
 6. **保存或分享结果**：部分工具支持生成图片，方便对比。
-
-如果你经常需要计算，可以收藏本站工具页面，或使用浏览器书签。
 
 ## 时薪换算的常见误区
 

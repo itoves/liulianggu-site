@@ -20,11 +20,11 @@ json_ld:
   dateModified: '2026-10-12'
   author:
     '@type': Organization
-    name: 我的工具站
+    name: 流量谷
   publisher:
     '@type': Organization
-    name: 我的工具站
-  mainEntityOfPage: https://example.com/qia-lu-li-xiao-hao-ji-suan-qi-jing-zhun-gu-suan-yun-dong-yu/
+    name: 流量谷
+  mainEntityOfPage: https://liulianggu.site/qia-lu-li-xiao-hao-ji-suan-qi-jing-zhun-gu-suan-yun-dong-yu/
   inLanguage: zh-CN
   keywords: 卡路里消耗,运动热量,减脂计算,代谢率,健身工具
   mainEntity:
@@ -129,20 +129,3 @@ TDEE = 基础代谢率（BMR）× 活动系数。BMR 可用 Mifflin-St Jeor 公�
 5. **环境**：高温、高海拔、不平坦地面都会增加消耗。
 
 如果你发现计算器结果和实际体重变化对不上，优先检查这几点。
-
-## 常见问题（FAQ）
-
-**Q1：卡路里消耗计算器准吗？**
-A：它是基于 MET 的估算，误差约 ±15%。适合做趋势参考，不适合精确到个位数。
-
-**Q2：为什么我运动后体重没变？**
-A：运动消耗可能被食欲增加抵消，或者你高估了消耗、低估了摄入。建议记录饮食 3 天再对比。
-
-**Q3：走路和跑步消耗差多少？**
-A：以 70kg 为例，快走 30 分钟约 175 大卡，慢跑 30 分钟约 290 大卡，差距约 65%。
-
-**Q4：计算器需要输入年龄和性别吗？**
-A：基础版只看体重、MET 和时长。进阶版会加入年龄性别修正，但影响通常小于 10%。
-
-**Q5：每天运动消耗多少卡才能减脂？**
-A：关键看总缺口，不是单次消耗。一般建议每日总缺口 300~500 大卡，每周减 0.3~0.5kg 比较可持续。

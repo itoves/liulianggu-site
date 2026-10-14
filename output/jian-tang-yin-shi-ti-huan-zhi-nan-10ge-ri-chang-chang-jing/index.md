@@ -19,11 +19,11 @@ json_ld:
   dateModified: '2026-10-12'
   author:
     '@type': Organization
-    name: 我的工具站
+    name: 流量谷
   publisher:
     '@type': Organization
-    name: 我的工具站
-  mainEntityOfPage: https://example.com/jian-tang-yin-shi-ti-huan-zhi-nan-10ge-ri-chang-chang-jing/
+    name: 流量谷
+  mainEntityOfPage: https://liulianggu.site/jian-tang-yin-shi-ti-huan-zhi-nan-10ge-ri-chang-chang-jing/
   inLanguage: zh-CN
   keywords: 减糖饮食,控糖,健康饮食,糖分替换
   mainEntity:
@@ -111,20 +111,3 @@ json_ld:
 5. **第7天：复盘。** 记录这一周哪一餐最难熬，下周针对性地找替代品，而不是硬戒。
 
 **关键提醒：** 减糖不是戒糖。水果、牛奶里的天然糖不需要刻意避开，重点减少的是**添加糖**——即白砂糖、果葡糖浆、蜂蜜、浓缩果汁等额外加进去的糖。看配料表时，只要出现“糖、糖浆、果葡糖浆、麦芽糊精、浓缩果汁”且排在前五位，就说明添加糖不少。
-
-## FAQ
-
-**Q：减糖饮食替换指南里，代糖可以随便用吗？**
-A：不建议长期大量依赖。代糖热量低，但可能维持对甜味的依赖，偶尔过渡可以，最终目标是降低整体甜度偏好。
-
-**Q：水果那么甜，减糖期间能吃吗？**
-A：能。完整水果的糖被纤维包裹，升糖速度远低于果汁和甜点。每天200~350克新鲜水果是合理范围。
-
-**Q：替换后觉得没味道怎么办？**
-A：用肉桂、香草精、柠檬皮、可可粉等天然香料增加风味，通常2~3周味觉就会适应。
-
-**Q：减糖后总是饿，正常吗？**
-A：如果只是把糖换掉但总热量骤降，容易饿。记得补充蛋白质和健康脂肪，比如鸡蛋、坚果、橄榄油。
-
-**Q：看配料表时，糖排第几位算高？**
-A：配料表按含量从高到低排列，糖排在前三位就属于高糖食品，建议换掉或减少频率。

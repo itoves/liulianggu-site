@@ -20,11 +20,11 @@ json_ld:
   dateModified: '2026-10-12'
   author:
     '@type': Organization
-    name: 我的工具站
+    name: 流量谷
   publisher:
     '@type': Organization
-    name: 我的工具站
-  mainEntityOfPage: https://example.com/ping-mu-fen-bian-lu-dui-zhao-cong-shou-ji-dao-xian-shi-qi-ge/
+    name: 流量谷
+  mainEntityOfPage: https://liulianggu.site/ping-mu-fen-bian-lu-dui-zhao-cong-shou-ji-dao-xian-shi-qi-ge/
   inLanguage: zh-CN
   keywords: 屏幕分辨率,分辨率对照,显示器,手机屏幕,像素密度
   mainEntity:

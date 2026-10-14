@@ -19,11 +19,11 @@ json_ld:
   dateModified: '2026-08-18'
   author:
     '@type': Organization
-    name: 我的工具站
+    name: 流量谷
   publisher:
     '@type': Organization
-    name: 我的工具站
-  mainEntityOfPage: https://example.com/hui-lu-huan-suan-zen-yao-suan-cai-bu-yu-san-ge-shi-cao-ji-ju/
+    name: 流量谷
+  mainEntityOfPage: https://liulianggu.site/hui-lu-huan-suan-zen-yao-suan-cai-bu-yu-san-ge-shi-cao-ji-ju/
   inLanguage: zh-CN
   keywords: 汇率换算,实时汇率,换汇技巧,外汇牌价
   mainEntity:

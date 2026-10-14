@@ -19,11 +19,11 @@ json_ld:
   dateModified: '2026-10-12'
   author:
     '@type': Organization
-    name: 我的工具站
+    name: 流量谷
   publisher:
     '@type': Organization
-    name: 我的工具站
-  mainEntityOfPage: https://example.com/mei-ri-dan-bai-zhi-she-ru-ji-suan-qi-3bu-suan-chu-ni-de-jing/
+    name: 流量谷
+  mainEntityOfPage: https://liulianggu.site/mei-ri-dan-bai-zhi-she-ru-ji-suan-qi-3bu-suan-chu-ni-de-jing/
   inLanguage: zh-CN
   keywords: 蛋白质计算,每日摄入量,健身营养,健康饮食
   mainEntity:

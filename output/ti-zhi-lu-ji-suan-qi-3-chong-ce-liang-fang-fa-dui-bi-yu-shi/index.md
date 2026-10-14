@@ -19,11 +19,11 @@ json_ld:
   dateModified: '2026-10-12'
   author:
     '@type': Organization
-    name: 我的工具站
+    name: 流量谷
   publisher:
     '@type': Organization
-    name: 我的工具站
-  mainEntityOfPage: https://example.com/ti-zhi-lu-ji-suan-qi-3-chong-ce-liang-fang-fa-dui-bi-yu-shi/
+    name: 流量谷
+  mainEntityOfPage: https://liulianggu.site/ti-zhi-lu-ji-suan-qi-3-chong-ce-liang-fang-fa-dui-bi-yu-shi/
   inLanguage: zh-CN
   keywords: 体脂率计算器,健康监测,身体成分,健身工具
   mainEntity:

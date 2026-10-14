@@ -20,11 +20,11 @@ json_ld:
   dateModified: '2026-08-18'
   author:
     '@type': Organization
-    name: 我的工具站
+    name: 流量谷
   publisher:
     '@type': Organization
-    name: 我的工具站
-  mainEntityOfPage: https://example.com/fang-dai-li-lu-ji-suan-qi-zen-yao-yong-2025zui-xin-lpryu-e/
+    name: 流量谷
+  mainEntityOfPage: https://liulianggu.site/fang-dai-li-lu-ji-suan-qi-zen-yao-yong-2025zui-xin-lpryu-e/
   inLanguage: zh-CN
   keywords: 房贷利率,计算器,LPR,等额本息,等额本金
   mainEntity:

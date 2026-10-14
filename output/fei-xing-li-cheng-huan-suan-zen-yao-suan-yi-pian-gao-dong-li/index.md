@@ -19,11 +19,11 @@ json_ld:
   dateModified: '2026-10-12'
   author:
     '@type': Organization
-    name: 我的工具站
+    name: 流量谷
   publisher:
     '@type': Organization
-    name: 我的工具站
-  mainEntityOfPage: https://example.com/fei-xing-li-cheng-huan-suan-zen-yao-suan-yi-pian-gao-dong-li/
+    name: 流量谷
+  mainEntityOfPage: https://liulianggu.site/fei-xing-li-cheng-huan-suan-zen-yao-suan-yi-pian-gao-dong-li/
   inLanguage: zh-CN
   keywords: 飞行里程,里程换算,常旅客,兑换攻略
   mainEntity:

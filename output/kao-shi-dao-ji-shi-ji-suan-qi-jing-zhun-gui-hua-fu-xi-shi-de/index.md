@@ -19,11 +19,11 @@ json_ld:
   dateModified: '2026-10-12'
   author:
     '@type': Organization
-    name: 我的工具站
+    name: 流量谷
   publisher:
     '@type': Organization
-    name: 我的工具站
-  mainEntityOfPage: https://example.com/kao-shi-dao-ji-shi-ji-suan-qi-jing-zhun-gui-hua-fu-xi-shi-de/
+    name: 流量谷
+  mainEntityOfPage: https://liulianggu.site/kao-shi-dao-ji-shi-ji-suan-qi-jing-zhun-gui-hua-fu-xi-shi-de/
   inLanguage: zh-CN
   keywords: 考试倒计时,复习计划,时间管理,学习工具
   mainEntity:

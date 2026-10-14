@@ -20,11 +20,11 @@ json_ld:
   dateModified: '2026-10-12'
   author:
     '@type': Organization
-    name: 我的工具站
+    name: 流量谷
   publisher:
     '@type': Organization
-    name: 我的工具站
-  mainEntityOfPage: https://example.com/ru-xiao-qi-yong-liang-ji-suan-qi-3fen-zhong-suan-chu-ni-jia/
+    name: 流量谷
+  mainEntityOfPage: https://liulianggu.site/ru-xiao-qi-yong-liang-ji-suan-qi-3fen-zhong-suan-chu-ni-jia/
   inLanguage: zh-CN
   keywords: 乳胶漆用量计算器,装修计算,墙面刷漆,涂料用量,装修省钱
   mainEntity:
@@ -91,7 +91,7 @@ json_ld:
 举例：建筑面积90㎡，涂刷面积约225㎡，用净味漆（涂布率9㎡/L），刷两遍：
 225 ÷ 9 × 2 = 50L，即需要10桶5L装。底漆刷一遍：225 ÷ 10 = 22.5L，约5桶5L装。
 
-如果你懒得算，直接打开[乳胶漆用量计算器](https://example.com/tools/paint-calculator)，输入面积和涂布率，自动出结果。
+如果你懒得算，直接打开乳胶漆用量计算器，输入面积和涂布率，自动出结果。
 
 ## 常见户型乳胶漆用量速查表
 
@@ -121,4 +121,4 @@ json_ld:
 
 另外，同一次涂刷尽量买同一批次。不同批次的漆即使色号相同，也可能有细微色差。如果必须分次买，保留一桶原漆作为「母漆」，补货时用来比对。
 
-用[乳胶漆用量计算器](https://example.com/tools/paint-calculator)算一遍，再结合上面的速查表核对，基本不会出大错。
+用乳胶漆用量计算器算一遍，再结合上面的速查表核对，基本不会出大错。

@@ -19,11 +19,11 @@ json_ld:
   dateModified: '2026-10-12'
   author:
     '@type': Organization
-    name: 我的工具站
+    name: 流量谷
   publisher:
     '@type': Organization
-    name: 我的工具站
-  mainEntityOfPage: https://example.com/chuang-lian-chi-cun-ji-suan-qi-3bu-suan-chu-ni-jia-chuang-hu/
+    name: 流量谷
+  mainEntityOfPage: https://liulianggu.site/chuang-lian-chi-cun-ji-suan-qi-3bu-suan-chu-ni-jia-chuang-hu/
   inLanguage: zh-CN
   keywords: 窗帘尺寸计算器,窗帘测量,装修工具,家居DIY
   mainEntity:
@@ -109,20 +109,3 @@ json_ld:
 | 飘窗（U型） | 1.8m | 2.0 | 3.6m | 3.6m |
 
 > 表中买布量按「定高买宽」估算，实际以计算器结果为准。
-
-## FAQ
-
-**Q：窗帘尺寸计算器算出的宽度要加多少？**
-A：成品宽度已含褶皱倍数，不用额外加。但左右各留5cm回边，计算器会自动加上。
-
-**Q：有窗帘盒，高度怎么量？**
-A：从窗帘盒内顶量到地面（或窗台），再减1~2cm避免拖地。
-
-**Q：褶皱倍数选2倍还是2.5倍？**
-A：预算够选2.5倍，垂感和遮光都更好；预算紧2倍也够用。
-
-**Q：计算器结果和商家量的不一样，信谁？**
-A：以你亲自量的数据为准，商家可能按默认褶皱算。把计算器结果给商家确认。
-
-**Q：窗帘尺寸计算器支持厘米和英寸吗？**
-A：支持，输入时选单位即可，结果会自动换算。

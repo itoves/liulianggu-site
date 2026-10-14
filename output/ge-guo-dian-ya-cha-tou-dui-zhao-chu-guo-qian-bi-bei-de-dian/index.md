@@ -20,11 +20,11 @@ json_ld:
   dateModified: '2026-10-12'
   author:
     '@type': Organization
-    name: 我的工具站
+    name: 流量谷
   publisher:
     '@type': Organization
-    name: 我的工具站
-  mainEntityOfPage: https://example.com/ge-guo-dian-ya-cha-tou-dui-zhao-chu-guo-qian-bi-bei-de-dian/
+    name: 流量谷
+  mainEntityOfPage: https://liulianggu.site/ge-guo-dian-ya-cha-tou-dui-zhao-chu-guo-qian-bi-bei-de-dian/
   inLanguage: zh-CN
   keywords: 电压插头,出国旅行,电源转换,插座类型,旅行攻略
   mainEntity:

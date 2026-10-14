@@ -19,11 +19,11 @@ json_ld:
   dateModified: '2026-10-12'
   author:
     '@type': Organization
-    name: 我的工具站
+    name: 流量谷
   publisher:
     '@type': Organization
-    name: 我的工具站
-  mainEntityOfPage: https://example.com/yun-zhou-ji-suan-qi-zen-yao-yong-3fen-zhong-gao-dong-yu-chan/
+    name: 流量谷
+  mainEntityOfPage: https://liulianggu.site/yun-zhou-ji-suan-qi-zen-yao-yong-3fen-zhong-gao-dong-yu-chan/
   inLanguage: zh-CN
   keywords: 孕周计算器,预产期计算,孕期工具,孕周换算
   mainEntity:
@@ -98,17 +98,3 @@ json_ld:
 - **早期出血误认为月经**：实际已怀孕，孕周会明显偏小。
 
 遇到这些情况，别自己硬算，直接让医生用早期B超定孕周。
-
-## 常见问题
-
-**Q：孕周计算器和B超结果不一致，以哪个为准？**
-A：孕早期（12周前）以B超为准，中晚期以末次月经计算的孕周为主，医生会综合判断。
-
-**Q：月经周期35天，预产期要改吗？**
-A：要。周期每多1天，预产期往后推1天。35天周期比28天晚约7天，计算器里改周期长度即可。
-
-**Q：孕周从同房日算还是末次月经算？**
-A：医学上统一从末次月经第一天算，不是同房日。同房日通常比末次月经晚14天左右。
-
-**Q：40周还没生怎么办？**
-A：预产期只是估算，37~42周分娩都正常。超过41周医生会评估是否催产，按时产检即可。

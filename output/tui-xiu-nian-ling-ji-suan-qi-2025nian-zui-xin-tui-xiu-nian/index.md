@@ -19,11 +19,11 @@ json_ld:
   dateModified: '2026-10-12'
   author:
     '@type': Organization
-    name: 我的工具站
+    name: 流量谷
   publisher:
     '@type': Organization
-    name: 我的工具站
-  mainEntityOfPage: https://example.com/tui-xiu-nian-ling-ji-suan-qi-2025nian-zui-xin-tui-xiu-nian/
+    name: 流量谷
+  mainEntityOfPage: https://liulianggu.site/tui-xiu-nian-ling-ji-suan-qi-2025nian-zui-xin-tui-xiu-nian/
   inLanguage: zh-CN
   keywords: 退休年龄计算器,延迟退休,养老金,社保
   mainEntity:
@@ -90,7 +90,7 @@ json_ld:
 
 ## 如何使用退休年龄计算器？
 
-我们的**退休年龄计算器**（https://example.com）操作简单，三步出结果：
+我们的**退休年龄计算器**（https://liulianggu.site
 
 1. **输入出生日期**：精确到年月日，系统自动匹配延迟批次。
 2. **选择性别与岗位**：普通女职工、女干部、男性职工等选项。
@@ -106,20 +106,3 @@ json_ld:
 - 实际退休年龄：63岁（2043年）
 
 如果选择弹性提前2年退休，则需满足最低缴费年限，且不得早于60岁。
-
-## 常见问题解答（FAQ）
-
-**Q1：退休年龄计算器准吗？**
-A：计算器依据国家最新政策文件编写，结果与社保局官方计算一致，但最终以当地社保经办机构核定为准。
-
-**Q2：女性工人和女干部退休年龄一样吗？**
-A：不一样。原法定退休年龄女工人50岁、女干部55岁，延迟节奏也不同，计算时需正确选择岗位性质。
-
-**Q3：灵活就业人员怎么计算退休年龄？**
-A：灵活就业人员参加职工养老保险的，男性按60岁、女性按55岁的原标准参与延迟计算，具体可咨询当地社保局。
-
-**Q4：计算器能算养老金吗？**
-A：目前计算器主要计算退休年龄，养老金估算需结合缴费年限、缴费基数等因素，可关注我们后续上线的养老金计算工具。
-
-**Q5：政策会再变吗？**
-A：延迟退休是长期渐进过程，未来可能微调，建议每年使用计算器复核一次。

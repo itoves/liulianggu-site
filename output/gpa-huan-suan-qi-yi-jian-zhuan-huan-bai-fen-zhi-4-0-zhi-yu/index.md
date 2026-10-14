@@ -19,11 +19,11 @@ json_ld:
   dateModified: '2026-10-12'
   author:
     '@type': Organization
-    name: 我的工具站
+    name: 流量谷
   publisher:
     '@type': Organization
-    name: 我的工具站
-  mainEntityOfPage: https://example.com/gpa-huan-suan-qi-yi-jian-zhuan-huan-bai-fen-zhi-4-0-zhi-yu/
+    name: 流量谷
+  mainEntityOfPage: https://liulianggu.site/gpa-huan-suan-qi-yi-jian-zhuan-huan-bai-fen-zhi-4-0-zhi-yu/
   inLanguage: zh-CN
   keywords: GPA换算器,GPA计算,成绩转换,留学申请
   mainEntity:
@@ -98,7 +98,7 @@ GPA 换算没有全球统一标准，常见的有标准 4.0 算法、WES 算法�
 - 制作英文成绩单时，附上换算后的 GPA 供招生官参考。
 - 申请奖学金或交换项目，对方要求提供 4.0 制 GPA。
 
-如果你还在准备语言考试，可以同时使用我们的[雅思分数换算器](https://example.com/ielts)和[托福分数换算器](https://example.com/toefl)来对比英语成绩。
+如果你还在准备语言考试，可以同时使用我们的雅思分数换算器和托福分数换算器来对比英语成绩。
 
 ## 手动换算步骤（无工具时）
 
@@ -109,17 +109,3 @@ GPA 换算没有全球统一标准，常见的有标准 4.0 算法、WES 算法�
 5. 保留两位小数，并注明使用的算法。
 
 例如：三门课分别为 4 学分（85 分，3.7）、3 学分（92 分，4.0）、2 学分（78 分，3.0），则 GPA = (3.7×4 + 4.0×3 + 3.0×2) / (4+3+2) = (14.8 + 12 + 6) / 9 = 3.64。
-
-## 常见问题
-
-**Q：GPA 换算器算出的结果和学校官方一样吗？**
-A：不一定。不同学校可能采用不同算法，换算器只是参考，最终以学校官方成绩单为准。
-
-**Q：百分制 80 分相当于 4.0 制的多少？**
-A：按标准算法，80 分对应 3.0；按 WES 算法，80 分对应 3.0；但部分学校会算作 3.3，建议以目标学校要求为准。
-
-**Q：可以用 GPA 换算器把 4.0 制转回百分制吗？**
-A：可以，但反向换算误差较大，因为 4.0 制是区间映射，通常只能给出大致范围。
-
-**Q：选修课成绩要算进 GPA 吗？**
-A：看学校要求。如果申请时学校要求 overall GPA，一般都要算；如果只要求 major GPA，则只算专业课。

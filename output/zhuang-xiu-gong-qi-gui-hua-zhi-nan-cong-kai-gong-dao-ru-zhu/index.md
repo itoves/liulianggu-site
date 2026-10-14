@@ -19,11 +19,11 @@ json_ld:
   dateModified: '2026-10-12'
   author:
     '@type': Organization
-    name: 我的工具站
+    name: 流量谷
   publisher:
     '@type': Organization
-    name: 我的工具站
-  mainEntityOfPage: https://example.com/zhuang-xiu-gong-qi-gui-hua-zhi-nan-cong-kai-gong-dao-ru-zhu/
+    name: 流量谷
+  mainEntityOfPage: https://liulianggu.site/zhuang-xiu-gong-qi-gui-hua-zhi-nan-cong-kai-gong-dao-ru-zhu/
   inLanguage: zh-CN
   keywords: 装修工期,工期规划,装修时间表,装修流程
   mainEntity:

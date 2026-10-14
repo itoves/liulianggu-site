@@ -20,11 +20,11 @@ json_ld:
   dateModified: '2026-10-12'
   author:
     '@type': Organization
-    name: 我的工具站
+    name: 流量谷
   publisher:
     '@type': Organization
-    name: 我的工具站
-  mainEntityOfPage: https://example.com/yi-wu-chi-ma-dui-zhao-wang-gou-bu-cai-lei-de-shi-yong-zhi/
+    name: 流量谷
+  mainEntityOfPage: https://liulianggu.site/yi-wu-chi-ma-dui-zhao-wang-gou-bu-cai-lei-de-shi-yong-zhi/
   inLanguage: zh-CN
   keywords: 衣物尺码对照,尺码表,网购服装,测量方法,尺码转换
   mainEntity:
@@ -125,20 +125,3 @@ json_ld:
 3. **对比自己已有的衣服**：找一件穿着合适的同类衣服，平铺测量胸围、腰围、衣长，和商品尺码表对比。
 4. **拿不准就选大不选小**：大了可以改，小了只能退。
 5. **利用退换货政策**：优先选择支持七天无理由退换的店铺，降低试错成本。
-
-## 常见问题
-
-**Q：我胸围 86cm，应该选 S 还是 M？**
-A：如果品牌尺码表显示 M 码胸围 84-88cm，选 M。如果介于两个码之间，看版型：修身款选 M，宽松款选 S。
-
-**Q：美国码 6 码相当于亚洲什么码？**
-A：美国女装 6 码大致对应亚洲的 M 码或 L 码，具体看品牌。建议以胸围、腰围数据为准，不要只看数字。
-
-**Q：裤子的腰围 28 英寸是多少厘米？**
-A：28 英寸约等于 71 厘米。换算公式：英寸数 × 2.54 = 厘米数。
-
-**Q：没有软尺怎么量胸围？**
-A：用一根绳子或数据线绕身体一周，做好标记，再用直尺测量绳子长度。
-
-**Q：孩子的衣服尺码和成人一样吗？**
-A：不一样。童装通常按身高加年龄标注，比如 120 码适合身高 115-125cm 的儿童，需要单独看童装尺码表。

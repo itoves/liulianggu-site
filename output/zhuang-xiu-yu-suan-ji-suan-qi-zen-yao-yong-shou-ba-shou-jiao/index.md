@@ -19,11 +19,11 @@ json_ld:
   dateModified: '2026-10-12'
   author:
     '@type': Organization
-    name: 我的工具站
+    name: 流量谷
   publisher:
     '@type': Organization
-    name: 我的工具站
-  mainEntityOfPage: https://example.com/zhuang-xiu-yu-suan-ji-suan-qi-zen-yao-yong-shou-ba-shou-jiao/
+    name: 流量谷
+  mainEntityOfPage: https://liulianggu.site/zhuang-xiu-yu-suan-ji-suan-qi-zen-yao-yong-shou-ba-shou-jiao/
   inLanguage: zh-CN
   keywords: 装修预算,计算器,装修费用,预算规划
   mainEntity:

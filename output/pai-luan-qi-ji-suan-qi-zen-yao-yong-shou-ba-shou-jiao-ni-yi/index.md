@@ -19,11 +19,11 @@ json_ld:
   dateModified: '2026-10-12'
   author:
     '@type': Organization
-    name: 我的工具站
+    name: 流量谷
   publisher:
     '@type': Organization
-    name: 我的工具站
-  mainEntityOfPage: https://example.com/pai-luan-qi-ji-suan-qi-zen-yao-yong-shou-ba-shou-jiao-ni-yi/
+    name: 流量谷
+  mainEntityOfPage: https://liulianggu.site/pai-luan-qi-ji-suan-qi-zen-yao-yong-shou-ba-shou-jiao-ni-yi/
   inLanguage: zh-CN
   keywords: 排卵期计算器,备孕,易孕期,月经周期
   mainEntity:
@@ -104,20 +104,3 @@ json_ld:
 - **观察宫颈黏液**：排卵前黏液会变得像蛋清一样透明、拉丝。
 - **试纸强阳后 12~24 小时**：通常就是排卵高峰，可安排同房。
 - **不要只盯“排卵日”**：排卵前 2 天同房，受孕概率反而更高。
-
-## FAQ
-
-**Q1：排卵期计算器算出的日期一定准吗？**
-A：不一定。它适合周期规律的人，误差通常在 1~3 天；周期不规律时误差可能超过 5 天。
-
-**Q2：月经周期 30 天，排卵日是第几天？**
-A：大约是本次月经第 1 天算起的第 16 天左右，易孕窗口约在第 11~17 天。
-
-**Q3：安全期用排卵期计算器靠谱吗？**
-A：不靠谱。排卵可能受情绪、作息影响提前或推后，安全期避孕失败率较高。
-
-**Q4：哺乳期能用排卵期计算器吗？**
-A：可以算，但结果参考价值低。哺乳期激素波动大，排卵时间很难预测。
-
-**Q5：计算器显示易孕期，但试纸没强阳，听谁的？**
-A：以试纸和体温为准。计算器只是统计推测，试纸测的是实际激素变化。

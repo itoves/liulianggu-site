@@ -19,11 +19,11 @@ json_ld:
   dateModified: '2026-10-12'
   author:
     '@type': Organization
-    name: 我的工具站
+    name: 流量谷
   publisher:
     '@type': Organization
-    name: 我的工具站
-  mainEntityOfPage: https://example.com/she-bao-jiao-fei-nian-xian-cha-xun-guan-fang-qu-dao-cao-zuo/
+    name: 流量谷
+  mainEntityOfPage: https://liulianggu.site/she-bao-jiao-fei-nian-xian-cha-xun-guan-fang-qu-dao-cao-zuo/
   inLanguage: zh-CN
   keywords: 社保查询,缴费年限,政务办事,社保
   mainEntity:
@@ -104,20 +104,3 @@ json_ld:
 - **视同缴费年限**：1992年前参加工作的国企职工，需在查询后到社保局认定“视同缴费年限”，否则会少算。
 - **多地参保**：在多个城市交过社保，需分别查询后合并计算，退休前要办理转移接续。
 - **医保年限独立**：养老和医保的缴费年限分开计算，查养老不代表查了医保。
-
-## 常见问题
-
-**Q：社保缴费年限查询结果和实际不符怎么办？**
-A：先核对缴费明细，若单位漏缴，可向当地社保稽核部门投诉；若系统错误，携带身份证到社保窗口申请更正。
-
-**Q：换过多个城市工作，缴费年限会累计吗？**
-A：养老保险和医疗保险的缴费年限全国累计，但需办理转移接续手续，否则可能只显示最后参保地记录。
-
-**Q：查到的缴费月数如何换算成年？**
-A：累计月数除以12，取整数年，剩余月数保留。例如180个月=15年，185个月=15年5个月。
-
-**Q：城乡居民社保缴费年限能算进职工社保吗？**
-A：不能直接合并。城乡居民养老保险转入职工养老保险时，只转移个人账户余额，缴费年限不折算。
-
-**Q：社保缴费年限查询需要收费吗？**
-A：所有官方渠道均免费，任何收费代查都是骗子。

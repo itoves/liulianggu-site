@@ -20,11 +20,11 @@ json_ld:
   dateModified: '2026-10-12'
   author:
     '@type': Organization
-    name: 我的工具站
+    name: 流量谷
   publisher:
     '@type': Organization
-    name: 我的工具站
-  mainEntityOfPage: https://example.com/wu-xian-yi-jin-ji-suan-zhi-nan-shou-ba-shou-jiao-ni-suan-chu/
+    name: 流量谷
+  mainEntityOfPage: https://liulianggu.site/wu-xian-yi-jin-ji-suan-zhi-nan-shou-ba-shou-jiao-ni-suan-chu/
   inLanguage: zh-CN
   keywords: 五险一金,社保计算,公积金,工资扣款,职场必备
   mainEntity:

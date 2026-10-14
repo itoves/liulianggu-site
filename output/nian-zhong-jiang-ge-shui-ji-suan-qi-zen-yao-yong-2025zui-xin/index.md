@@ -18,11 +18,11 @@ json_ld:
   dateModified: '2026-10-12'
   author:
     '@type': Organization
-    name: 我的工具站
+    name: 流量谷
   publisher:
     '@type': Organization
-    name: 我的工具站
-  mainEntityOfPage: https://example.com/nian-zhong-jiang-ge-shui-ji-suan-qi-zen-yao-yong-2025zui-xin/
+    name: 流量谷
+  mainEntityOfPage: https://liulianggu.site/nian-zhong-jiang-ge-shui-ji-suan-qi-zen-yao-yong-2025zui-xin/
   inLanguage: zh-CN
   keywords: 年终奖个税,个税计算器,职场工具
   mainEntity:
@@ -67,7 +67,7 @@ json_ld:
 2. **全年综合所得应纳税所得额**：即全年工资、劳务报酬等收入，减去 6 万元免征额、三险一金、专项附加扣除后的金额。如果为负数，按 0 算。
 3. **选择计税方式**：单独计税或并入综合所得，计算器会自动对比。
 
-以「我的工具站」的**年终奖个税计算器**为例，输入上述数据后，页面会直接显示：
+以「流量谷」的**年终奖个税计算器**为例，输入上述数据后，页面会直接显示：
 
 - 单独计税应纳税额
 - 并入综合所得应纳税额

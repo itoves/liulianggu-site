@@ -19,11 +19,11 @@ json_ld:
   dateModified: '2026-10-12'
   author:
     '@type': Organization
-    name: 我的工具站
+    name: 流量谷
   publisher:
     '@type': Organization
-    name: 我的工具站
-  mainEntityOfPage: https://example.com/bmi-ti-zhong-zhi-shu-ji-suan-qi-zai-xian-ji-suan-yu-jian-jie/
+    name: 流量谷
+  mainEntityOfPage: https://liulianggu.site/bmi-ti-zhong-zhi-shu-ji-suan-qi-zai-xian-ji-suan-yu-jian-jie/
   inLanguage: zh-CN
   keywords: BMI计算器,体重指数,健康评估,在线工具
   mainEntity:
@@ -100,20 +100,3 @@ BMI 体重指数计算器只是一个初筛工具，以下情况需注意：
 - **孕妇、儿童**：不适用成人 BMI 标准，需使用专用曲线。
 
 建议将 BMI 与腰围、腰臀比、体脂率结合判断。例如，BMI 正常但腰围超标，仍属于中心性肥胖，健康风险较高。
-
-## 常见问题 FAQ
-
-**Q1：BMI 计算器结果准确吗？**
-A：对于普通成年人，BMI 与体脂率有较好相关性，但无法区分肌肉和脂肪。建议结合腰围和体脂率综合评估。
-
-**Q2：BMI 正常就代表健康吗？**
-A：不一定。BMI 正常但腰围超标（男性≥90cm，女性≥85cm）仍属中心性肥胖，需关注内脏脂肪。
-
-**Q3：儿童可以用 BMI 体重指数计算器吗？**
-A：儿童需使用年龄和性别对应的 BMI 百分位曲线，不能直接套用成人标准。
-
-**Q4：BMI 超过 28 怎么办？**
-A：建议先咨询医生或营养师，制定饮食和运动计划。每周减重 0.5~1kg 是安全速度。
-
-**Q5：孕妇能用 BMI 计算器吗？**
-A：孕妇应使用孕期增重推荐范围，而非普通 BMI 标准。请咨询产科医生。

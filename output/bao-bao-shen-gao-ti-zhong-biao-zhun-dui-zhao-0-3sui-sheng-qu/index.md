@@ -19,11 +19,11 @@ json_ld:
   dateModified: '2026-10-12'
   author:
     '@type': Organization
-    name: 我的工具站
+    name: 流量谷
   publisher:
     '@type': Organization
-    name: 我的工具站
-  mainEntityOfPage: https://example.com/bao-bao-shen-gao-ti-zhong-biao-zhun-dui-zhao-0-3sui-sheng-qu/
+    name: 流量谷
+  mainEntityOfPage: https://liulianggu.site/bao-bao-shen-gao-ti-zhong-biao-zhun-dui-zhao-0-3sui-sheng-qu/
   inLanguage: zh-CN
   keywords: 宝宝身高体重,生长曲线,育儿指南,婴幼儿发育
   mainEntity:

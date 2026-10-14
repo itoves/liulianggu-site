@@ -20,11 +20,11 @@ json_ld:
   dateModified: '2026-10-12'
   author:
     '@type': Organization
-    name: 我的工具站
+    name: 流量谷
   publisher:
     '@type': Organization
-    name: 我的工具站
-  mainEntityOfPage: https://example.com/qiang-zhuan-shu-liang-ji-suan-qi-3bu-suan-chu-jing-zhun-ci/
+    name: 流量谷
+  mainEntityOfPage: https://liulianggu.site/qiang-zhuan-shu-liang-ji-suan-qi-3bu-suan-chu-jing-zhun-ci/
   inLanguage: zh-CN
   keywords: 墙砖数量计算器,瓷砖用量计算,装修计算,墙砖损耗,贴砖面积
   mainEntity:
@@ -123,20 +123,3 @@ json_ld:
 - 大砖（600×1200）：面积 × 1.4 片/㎡ 左右
 
 这些口诀只用于快速心算，精确下单还是建议用墙砖数量计算器完整走一遍。
-
-## 常见问题
-
-**Q1：墙砖数量计算器算出的片数，为什么还要加损耗？**
-A：因为实际铺贴要切割边角、对花、避让插座，一般损耗 5%~15%，不加损耗现场一定不够。
-
-**Q2：厨房和卫生间的损耗率一样吗？**
-A：不一样。卫生间管道多、边角多，损耗通常比厨房高 2%~3%。
-
-**Q3：门窗面积一定要扣吗？**
-A：要扣，但门洞侧面、窗台侧面如果贴砖，要加回去。
-
-**Q4：买多了能退吗？**
-A：未泡水、未切割的整箱砖通常可退，但不同商家政策不同，下单前问清楚。
-
-**Q5：墙砖和地砖能混用计算器吗？**
-A：公式一样，但地砖损耗通常比墙砖高 2%~5%，因为地面切割和找坡更复杂。

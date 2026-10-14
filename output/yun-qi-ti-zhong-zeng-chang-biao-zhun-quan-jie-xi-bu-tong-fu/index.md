@@ -19,11 +19,11 @@ json_ld:
   dateModified: '2026-10-12'
   author:
     '@type': Organization
-    name: 我的工具站
+    name: 流量谷
   publisher:
     '@type': Organization
-    name: 我的工具站
-  mainEntityOfPage: https://example.com/yun-qi-ti-zhong-zeng-chang-biao-zhun-quan-jie-xi-bu-tong-fu/
+    name: 流量谷
+  mainEntityOfPage: https://liulianggu.site/yun-qi-ti-zhong-zeng-chang-biao-zhun-quan-jie-xi-bu-tong-fu/
   inLanguage: zh-CN
   keywords: 孕期体重,体重增长标准,母婴健康,孕期营养
   mainEntity:

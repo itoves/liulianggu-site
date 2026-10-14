@@ -19,11 +19,11 @@ json_ld:
   dateModified: '2026-10-12'
   author:
     '@type': Organization
-    name: 我的工具站
+    name: 流量谷
   publisher:
     '@type': Organization
-    name: 我的工具站
-  mainEntityOfPage: https://example.com/shui-dian-fei-gu-suan-qi-zai-xian-kuai-su-ji-suan-mei-yue-qi/
+    name: 流量谷
+  mainEntityOfPage: https://liulianggu.site/shui-dian-fei-gu-suan-qi-zai-xian-kuai-su-ji-suan-mei-yue-qi/
   inLanguage: zh-CN
   keywords: 水电费估算器,家庭开支,节能,生活工具
   mainEntity:
@@ -115,20 +115,3 @@ json_ld:
 - 做饭时盖锅盖，缩短加热时间。
 - 燃气热水器温度设定在45℃左右，避免过高。
 - 定期清理燃气灶火孔，保持燃烧效率。
-
-## 常见问题解答（FAQ）
-
-**Q1：水电费估算器准确吗？**
-A：估算器基于你输入的用量和单价计算，如果数据准确，误差通常在5%以内。但阶梯电价、季节浮动等因素可能导致偏差。
-
-**Q2：没有历史账单，怎么估算用量？**
-A：可参考本文表格中的三口之家数据，或根据家庭人数、电器数量粗略调整。例如，每增加一人，月用电量约增加50度。
-
-**Q3：为什么我算出的费用和实际账单差很多？**
-A：可能原因：未计入阶梯电价（超出第一档后单价上涨）、漏算固定费用（如垃圾费、污水处理费），或单价未更新。
-
-**Q4：如何降低夏季电费？**
-A：空调温度调至26-28℃，配合风扇使用；减少冰箱开门次数；避开高峰时段使用大功率电器。
-
-**Q5：估算器支持商业用电吗？**
-A：大多数在线估算器针对居民阶梯价格设计。商业用电需按当地商业电价单独计算，建议咨询供电公司。

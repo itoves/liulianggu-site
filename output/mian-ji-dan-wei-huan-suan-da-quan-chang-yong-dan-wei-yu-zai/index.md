@@ -19,11 +19,11 @@ json_ld:
   dateModified: '2026-08-14'
   author:
     '@type': Organization
-    name: 我的工具站
+    name: 流量谷
   publisher:
     '@type': Organization
-    name: 我的工具站
-  mainEntityOfPage: https://example.com/mian-ji-dan-wei-huan-suan-da-quan-chang-yong-dan-wei-yu-zai/
+    name: 流量谷
+  mainEntityOfPage: https://liulianggu.site/mian-ji-dan-wei-huan-suan-da-quan-chang-yong-dan-wei-yu-zai/
   inLanguage: zh-CN
   keywords: 面积单位换算,平方米换算,公顷亩换算,单位转换
   mainEntity:
@@ -118,20 +118,3 @@ json_ld:
 4. 点击换算，立即得到结果。
 
 工具适合快速确认，但手动计算能力也别丢掉——遇到网络不稳或心算验证时，上面的速查表就能派上用场。
-
-## FAQ
-
-### 1 公顷等于多少亩？
-1 公顷 = 15 亩。因为 1 公顷 = 10000 平方米，1 亩 ≈ 666.67 平方米，10000 ÷ 666.67 ≈ 15。
-
-### 平方米和平方千米的进率是多少？
-1 平方千米 = 1,000,000 平方米（一百万平方米）。
-
-### 一英亩等于多少平方米？
-1 英亩 ≈ 4046.86 平方米。英制单位，美国、英国等地常用。
-
-### 面积单位换算最容易错在哪？
-最常见错误是混淆「米」和「平方米」。例如边长 10 米的正方形，面积是 100 平方米，不是 10 平方米。另外亩与公顷的换算也常错，记住 1 公顷 = 15 亩。
-
-### 如何快速心算亩与平方米？
-用口诀「加半移三」：平方米数加一半，小数点左移三位，就是亩。例如 3000 平方米，加一半得 4500，小数点左移三位得 4.5 亩。反过来，亩数乘 2 再乘 1000，再除以 3，约等于平方米。
