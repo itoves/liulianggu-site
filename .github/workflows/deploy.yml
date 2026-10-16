@@ -32,9 +32,11 @@ jobs:
       - name: Build static site
         run: |
           python build_site.py --domain "${SITE_URL:-https://liulianggu.site}"
-          # 搜索引擎验证文件（google*.html / baidu_verify_*.html）自动复制到站点根目录
+          # 搜索引擎"文件验证"备选：验证文件自动复制到站点根目录
           cp -f google*.html site/ 2>/dev/null || true
           cp -f baidu_verify_*.html site/ 2>/dev/null || true
+          cp -f BingSiteAuth.xml site/ 2>/dev/null || true
+          cp -f yandex_*.html site/ 2>/dev/null || true
 
       - uses: actions/upload-pages-artifact@v3
         with:
