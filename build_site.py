@@ -166,7 +166,7 @@ def page_wrap(title: str, content_html: str, site: dict, canonical: str = "", de
     <a class="logo" href="/">{escape(site.get('name', '我的工具站'))}</a>
     <nav>
       <a href="/" class="{('active' if active == 'home' else '')}">首页</a>
-      <a href="/#articles">全部文章</a>
+      <a href="/#categories">分类</a>
     </nav>
   </div>
 </header>
@@ -181,32 +181,111 @@ def page_wrap(title: str, content_html: str, site: dict, canonical: str = "", de
 </html>"""
 
 
-def render_home(articles: list[dict], site: dict) -> str:
-    cards = []
+# 分类归一化（历史遗留的英文分类 -> 中文）与配色
+CAT_FIX = {"converter": "工具", "guide": "站长", "faq": "工具"}
+CAT_COLORS = [
+    "#2563eb", "#0891b2", "#059669", "#d97706", "#dc2626", "#7c3aed",
+    "#db2777", "#0d9488", "#65a30d", "#ea580c", "#4f46e5", "#b45309",
+    "#0369a1", "#9333ea",
+]
+
+
+def _norm_cat(name: str) -> str:
+    raw = (name or "").strip()
+    return CAT_FIX.get(raw.lower(), raw or "未分类")
+
+
+HOME_SEARCH_JS = """<script>(function(){
+var q=document.getElementById('q'),nr=document.getElementById('nores');if(!q)return;
+q.addEventListener('input',function(){
+var v=q.value.trim().toLowerCase(),total=0;
+document.querySelectorAll('.cat-section').forEach(function(s){var n=0;
+s.querySelectorAll('.card').forEach(function(c){
+var ok=!v||(c.getAttribute('data-search')||'').toLowerCase().indexOf(v)>=0;
+c.style.display=ok?'':'none';if(ok)n++;});
+s.style.display=n?'':'none';total+=n;});
+if(nr){nr.style.display=total?'none':'block';}
+});
+})();</script>"""
+
+
+def render_home(articles: list[dict], site: dict, registry: dict | None = None) -> str:
+    """首页：渐变 hero + 搜索 + 分类快捷跳转 + 按分类分组的卡片网格。"""
+    registry = registry or {}
+
+    groups: dict[str, list[dict]] = {}
     for a in articles:
-        meta = a["meta"]
-        summary = (meta.get("summary") or "")[:90]
-        date = meta.get("date", "")
-        cards.append(f"""
-<article class="card">
-  <a class="card-link" href="/{meta['slug']}/">
-    <span class="badge">{escape(meta.get('category', '文章'))}</span>
-    <h3>{escape(meta['title'])}</h3>
-    <p>{escape(summary)}…</p>
-    <time>{date}</time>
-  </a>
-</article>""")
-    grid = "\n".join(cards) if cards else '<p class="empty">还没有文章。先运行 <code>python main.py generate --count 5</code> 生成内容。</p>'
-    return f"""
-<section class="hero">
-  <h1>{escape(site.get('name', '我的工具站'))}</h1>
-  <p>{escape(site.get('tagline', '小而实用的在线工具与知识指南，全部免费使用。'))}</p>
-  <p class="stat">已收录 <strong>{len(articles)}</strong> 篇实用内容</p>
-</section>
-<section id="articles">
-  <h2>全部文章</h2>
-  <div class="grid">{grid}</div>
-</section>"""
+        groups.setdefault(_norm_cat(a["meta"].get("category")), []).append(a)
+    order = sorted(groups.items(), key=lambda kv: (-len(kv[1]), kv[0]))
+    color_of = {c: CAT_COLORS[i % len(CAT_COLORS)] for i, (c, _) in enumerate(order)}
+
+    tool_n = sum(
+        1 for a in articles if registry.get((a["meta"].get("keyword") or "").strip())
+    )
+
+    if not order:
+        return (
+            '<section class="hero"><h1>' + escape(site.get("name", "我的工具站")) + "</h1>"
+            '<p class="tagline">' + escape(site.get("tagline", "")) + "</p></section>"
+            '<p class="empty">还没有文章。先运行 <code>python main.py generate --count 5</code> 生成内容。</p>'
+        )
+
+    chips = "\n".join(
+        f'<a class="chip" href="#cat-{i}">{escape(c)}<span>{len(items)}</span></a>'
+        for i, (c, items) in enumerate(order)
+    )
+
+    sections = []
+    for i, (cat, items) in enumerate(order):
+        cards = []
+        for a in items:
+            m = a["meta"]
+            kw = (m.get("keyword") or "").strip()
+            has_tool = bool(registry.get(kw))
+            summary = (m.get("summary") or "")[:62]
+            search = " ".join(
+                [str(m.get("title", "")), str(m.get("summary", "")), kw, cat]
+            )
+            flag = '<span class="tool-flag">⚡ 可在线计算</span>' if has_tool else ""
+            cards.append(
+                f'<article class="card" data-search="{escape(search)}">'
+                f'<a class="card-link" href="/{m["slug"]}/">'
+                f'<div class="card-top">'
+                f'<span class="badge" style="background:{color_of[cat]}">{escape(cat)}</span>'
+                f"{flag}</div>"
+                f"<h3>{escape(m['title'])}</h3>"
+                f"<p>{escape(summary)}…</p>"
+                f"<time>{escape(str(m.get('date', '')))}</time>"
+                "</a></article>"
+            )
+        sections.append(
+            f'<section class="cat-section" id="cat-{i}">'
+            f'<div class="cat-head" style="--c:{color_of[cat]}"><h2>{escape(cat)}</h2>'
+            f'<span class="cat-count">{len(items)} 篇</span></div>'
+            f'<div class="grid">{"".join(cards)}</div></section>'
+        )
+
+    stats = (
+        f'<div class="stats">'
+        f'<span><b>{len(articles)}</b>篇内容</span>'
+        f'<span><b>{tool_n}</b>个在线工具</span>'
+        f'<span><b>{len(order)}</b>个分类</span>'
+        f"</div>"
+    )
+
+    return (
+        f'<section class="hero">'
+        f'<h1>{escape(site.get("name", "我的工具站"))}</h1>'
+        f'<p class="tagline">{escape(site.get("tagline", "小而实用的在线工具与实用指南，全部免费使用。"))}</p>'
+        f"{stats}"
+        f'<input id="q" class="search" type="search" autocomplete="off" '
+        f'placeholder="搜索工具或文章，如 BMI、房贷、单位换算…" aria-label="搜索站内内容">'
+        f"</section>"
+        f'<nav class="chips" id="categories" aria-label="分类快捷跳转">{chips}</nav>'
+        + "".join(sections)
+        + '<p class="no-result" id="nores" style="display:none">没有找到匹配的内容，换个关键词试试。</p>'
+        + HOME_SEARCH_JS
+    )
 
 
 def render_article_page(article: dict, site: dict, registry: dict | None = None) -> str:
@@ -283,19 +362,45 @@ body{margin:0;font-family:"PingFang SC","Microsoft YaHei",system-ui,sans-serif;b
 .logo{font-size:19px;font-weight:700;color:var(--ink);text-decoration:none}
 nav a{margin-left:18px;color:var(--muted);text-decoration:none}
 nav a:hover,nav a.active{color:var(--accent)}
-.hero{text-align:center;padding:56px 0 30px}
-.hero h1{font-size:32px;margin:0 0 10px}
-.hero p{margin:6px 0;color:var(--muted)}
-.stat strong{color:var(--accent);font-size:22px}
-#articles h2,.related h2{font-size:22px;margin:34px 0 14px}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin-bottom:40px}
+/* ---- 首页 hero / 搜索 / 分类导航 ---- */
+.hero{text-align:center;padding:44px 24px 30px;margin:26px 0 6px;border-radius:18px;border:1px solid #e6ecff;
+background:
+radial-gradient(900px 280px at 18% -25%,rgba(37,99,235,.12),transparent 62%),
+radial-gradient(760px 280px at 86% -10%,rgba(217,119,6,.12),transparent 62%),
+linear-gradient(135deg,#eef4ff 0%,#f7f8ff 45%,#fff7ed 100%)}
+.hero h1{font-size:34px;margin:0 0 8px;letter-spacing:.5px}
+.hero .tagline{margin:6px 0 18px;color:var(--muted);font-size:15px}
+.stats{display:flex;justify-content:center;flex-wrap:wrap;gap:10px;margin-bottom:18px}
+.stats span{background:rgba(255,255,255,.92);border:1px solid #e3e9f7;border-radius:999px;
+padding:6px 16px;font-size:13px;color:var(--muted);box-shadow:0 1px 2px rgba(16,24,40,.04)}
+.stats b{color:var(--accent);font-size:16px;margin-right:4px}
+.search{display:block;width:100%;max-width:460px;margin:0 auto;padding:12px 18px;font-size:15px;
+font-family:inherit;border:1px solid #dbe3f5;border-radius:999px;background:#fff;color:var(--ink);
+outline:none;box-shadow:0 2px 10px rgba(37,99,235,.06)}
+.search:focus{border-color:var(--accent);box-shadow:0 3px 14px rgba(37,99,235,.18)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:20px 0 4px}
+.chip{display:inline-flex;align-items:center;gap:6px;margin:0;padding:6px 8px 6px 14px;border-radius:999px;
+background:#fff;border:1px solid var(--line);color:#374151;text-decoration:none;font-size:13px;
+transition:transform .15s,border-color .15s,color .15s}
+.chip:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-1px)}
+.chip span{background:#f1f5f9;border-radius:999px;padding:0 6px;font-size:11px;color:var(--muted)}
+.no-result{text-align:center;color:var(--muted);padding:40px 0 60px}
+/* ---- 分类区块与卡片 ---- */
+.cat-section{margin:32px 0 0;scroll-margin-top:78px}
+.cat-head{display:flex;align-items:center;gap:10px;margin:0 0 14px}
+.cat-head h2{font-size:20px;margin:0;padding-left:12px;position:relative}
+.cat-head h2::before{content:"";position:absolute;left:0;top:5px;bottom:5px;width:4px;border-radius:4px;background:var(--c,var(--accent))}
+.cat-count{font-size:12px;color:var(--muted);background:#f3f4f6;border-radius:999px;padding:2px 9px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin-bottom:12px}
 .card{background:var(--card);border:1px solid var(--line);border-radius:12px;transition:transform .15s,box-shadow .15s}
-.card:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(0,0,0,.07)}
+.card:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(0,0,0,.07);border-color:#cfdcf5}
 .card-link{display:block;padding:18px;text-decoration:none;color:inherit}
-.card h3{margin:8px 0;font-size:17px;color:var(--ink)}
-.card p{margin:0 0 8px;color:var(--muted);font-size:14px}
+.card-top{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:4px}
+.card h3{margin:6px 0;font-size:17px;color:var(--ink);line-height:1.45}
+.card p{margin:0 0 10px;color:var(--muted);font-size:14px;min-height:44px}
 .card time{color:var(--muted);font-size:13px}
-.badge{display:inline-block;background:#eef2ff;color:var(--accent);font-size:12px;padding:2px 8px;border-radius:999px}
+.badge{display:inline-block;background:var(--accent);color:#fff;font-size:12px;padding:2px 9px;border-radius:999px}
+.tool-flag{display:inline-block;font-size:11px;color:#b45309;background:#fffbeb;border:1px solid #fde68a;border-radius:999px;padding:2px 8px}
 .empty{color:var(--muted)}
 .breadcrumb{font-size:13px;color:var(--muted);margin:24px 0 8px}
 .breadcrumb a{color:var(--accent);text-decoration:none}
@@ -335,7 +440,14 @@ nav a:hover,nav a.active{color:var(--accent)}
 .tool-table th{background:#f9fafb}
 .tool-note{color:var(--muted);font-size:13px;margin:10px 0 0}
 .tool-disclaimer{margin-top:14px;font-size:13px;color:#b45309;background:#fffbeb;border:1px solid #fde68a;border-radius:8px;padding:8px 12px}
-@media(max-width:640px){.post{padding:20px}.hero h1{font-size:26px}.tool-primary{font-size:24px}}"""
+@media(max-width:640px){
+.post{padding:20px}
+.hero{padding:32px 16px 24px;border-radius:14px;margin-top:16px}
+.hero h1{font-size:26px}
+.grid{grid-template-columns:1fr}
+.card p{min-height:auto}
+.tool-primary{font-size:24px}
+}"""
 
 
 def render_privacy_page(site: dict) -> str:
@@ -423,7 +535,7 @@ def build(domain: str | None = None) -> Path:
                 pass  # 目录被占用/权限受限时跳过，不影响本次生成
 
     (SITE_DIR / "index.html").write_text(
-        page_wrap(site.get("name", "我的工具站"), render_home(articles, site), site,
+        page_wrap(site.get("name", "我的工具站"), render_home(articles, site, registry), site,
                   canonical=f"{site_url}/", description=site.get("tagline", ""), active="home"),
         encoding="utf-8",
     )
