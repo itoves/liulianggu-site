@@ -174,7 +174,7 @@ def page_wrap(title: str, content_html: str, site: dict, canonical: str = "", de
 <footer class="site-footer">
   <div class="container">
     <p>&copy; {datetime.now().year} {escape(site.get('name', '我的工具站'))} · 内容均为原创，仅供学习参考</p>
-    <p><a href="/sitemap.xml">sitemap</a> · <a href="/robots.txt">robots</a> · <a href="/privacy/">隐私政策</a></p>
+    <p><a href="/all/">全部内容</a> · <a href="/sitemap.xml">sitemap</a> · <a href="/robots.txt">robots</a> · <a href="/privacy/">隐私政策</a></p>
   </div>
 </footer>
 </body>
@@ -440,12 +440,18 @@ transition:transform .15s,border-color .15s,color .15s}
 .tool-table th{background:#f9fafb}
 .tool-note{color:var(--muted);font-size:13px;margin:10px 0 0}
 .tool-disclaimer{margin-top:14px;font-size:13px;color:#b45309;background:#fffbeb;border:1px solid #fde68a;border-radius:8px;padding:8px 12px}
+.all-list{list-style:none;padding:0;margin:0 0 8px;columns:2;column-gap:28px}
+.all-list>li{margin:5px 0;font-size:14px;break-inside:avoid}
+.all-list a{color:var(--ink);text-decoration:none}
+.all-list a:hover{color:var(--accent);text-decoration:underline}
+.all-flag{font-size:11px;color:#b45309;background:#fffbeb;border:1px solid #fde68a;border-radius:999px;padding:1px 6px;margin-left:6px}
 @media(max-width:640px){
 .post{padding:20px}
 .hero{padding:32px 16px 24px;border-radius:14px;margin-top:16px}
 .hero h1{font-size:26px}
 .grid{grid-template-columns:1fr}
 .card p{min-height:auto}
+.all-list{columns:1}
 .tool-primary{font-size:24px}
 }"""
 
@@ -483,6 +489,44 @@ def render_privacy_page(site: dict) -> str:
                      description="了解本站如何收集与使用信息、第三方广告与 Cookie 的说明。")
 
 
+def render_all_page(articles: list[dict], site: dict, registry: dict | None = None) -> str:
+    """全部内容索引页：按分类列出所有链接。
+
+    sitemap.xml 抓取失败时的兜底发现路径——爬虫只要抓到这一个页面，
+    就能顺着链接走遍全站，因此每页页脚都会链到它。
+    """
+    registry = registry or {}
+    groups: dict[str, list[dict]] = {}
+    for a in articles:
+        groups.setdefault(_norm_cat(a["meta"].get("category")), []).append(a)
+    order = sorted(groups.items(), key=lambda kv: (-len(kv[1]), kv[0]))
+
+    blocks = []
+    for cat, items in order:
+        lis = []
+        for a in items:
+            m = a["meta"]
+            kw = (m.get("keyword") or "").strip()
+            mark = ' <span class="all-flag">⚡工具</span>' if registry.get(kw) else ""
+            lis.append(f'<li><a href="/{m["slug"]}/">{escape(m["title"])}</a>{mark}</li>')
+        blocks.append(
+            f"<h2>{escape(cat)}<span class='cat-count'>{len(items)} 篇</span></h2>"
+            f"<ul class='all-list'>{''.join(lis)}</ul>"
+        )
+
+    name = escape(site.get("name", "我的工具站"))
+    content = (
+        f'<nav class="breadcrumb"><a href="/">首页</a> <span>/</span> <span>全部内容</span></nav>'
+        f'<article class="post"><header><h1>全部工具与文章（{len(articles)} 篇）</h1>'
+        f'<div class="post-meta"><span class="tag">按分类整理</span>'
+        f'<span class="tag">共 {len(order)} 个分类</span></div></header>'
+        f'<div class="post-body">{"".join(blocks)}</div></article>'
+    )
+    return page_wrap(f"全部内容 · {name}", content, site,
+                     canonical=f"{site['url'].rstrip('/')}/all/",
+                     description=f"{name}全部在线工具与文章索引，按分类整理，共 {len(articles)} 篇。")
+
+
 def write_static_files(site: dict, site_url: str) -> None:
     (SITE_DIR / "style.css").write_text(STYLE_CSS, encoding="utf-8")
     favicon = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" rx="20" fill="#2563eb"/><text x="50" y="68" font-size="52" text-anchor="middle" fill="#fff" font-family="Arial">S</text></svg>'
@@ -493,17 +537,27 @@ def write_static_files(site: dict, site_url: str) -> None:
 
 
 def write_sitemap(articles: list[dict], site_url: str) -> None:
+    today = datetime.now().date().isoformat()
     lines = [
         '<?xml version="1.0" encoding="UTF-8"?>',
         '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
     ]
+
+    def add(loc: str, lastmod: str, freq: str = "weekly") -> None:
+        lines.append("  <url>")
+        lines.append(f"    <loc>{loc}</loc>")
+        lines.append(f"    <lastmod>{lastmod}</lastmod>")
+        lines.append(f"    <changefreq>{freq}</changefreq>")
+        lines.append("  </url>")
+
+    # 首页与聚合页权重更高，单独列出
+    add(f"{site_url.rstrip('/')}/", today, "daily")
+    add(f"{site_url.rstrip('/')}/all/", today, "daily")
+    add(f"{site_url.rstrip('/')}/privacy/", today, "monthly")
     for a in articles:
         meta = a["meta"]
-        lines.append("  <url>")
-        lines.append(f"    <loc>{site_url.rstrip('/')}/{meta['slug']}/</loc>")
-        lines.append(f"    <lastmod>{meta.get('date', datetime.now().date().isoformat())}</lastmod>")
-        lines.append("    <changefreq>weekly</changefreq>")
-        lines.append("  </url>")
+        add(f"{site_url.rstrip('/')}/{meta['slug']}/",
+            meta.get("date", today))
     lines.append("</urlset>")
     (SITE_DIR / "sitemap.xml").write_text("\n".join(lines) + "\n", encoding="utf-8")
 
@@ -522,7 +576,7 @@ def build(domain: str | None = None) -> Path:
 
     # 清理站点里已不存在的文章目录，避免旧页面残留（单个失败不阻塞构建）
     # 跳过 privacy/assets：二者每次构建都会重新生成，无需先删
-    current_slugs = {a["meta"]["slug"] for a in articles} | {"privacy"}
+    current_slugs = {a["meta"]["slug"] for a in articles} | {"privacy", "all"}
     for child in SITE_DIR.iterdir():
         if (
             child.is_dir()
@@ -552,6 +606,12 @@ def build(domain: str | None = None) -> Path:
     # 隐私政策页（AdSense / 百度联盟 审核硬性要求）
     (SITE_DIR / "privacy").mkdir(parents=True, exist_ok=True)
     (SITE_DIR / "privacy" / "index.html").write_text(render_privacy_page(site), encoding="utf-8")
+
+    # 全部内容索引页：sitemap.xml 抓取失败时的爬虫发现兜底路径
+    (SITE_DIR / "all").mkdir(parents=True, exist_ok=True)
+    (SITE_DIR / "all" / "index.html").write_text(
+        render_all_page(articles, site, registry), encoding="utf-8"
+    )
     return SITE_DIR
 
 
