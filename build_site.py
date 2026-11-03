@@ -30,21 +30,34 @@ MD = md_lib.Markdown(extensions=["tables", "fenced_code", "toc"])
 
 # ---------------- 数据读取 ----------------
 
+DEFAULT_SITE = {
+    "name": "流量谷",
+    "url": "https://liulianggu.site",
+    "language": "zh-CN",
+    "timezone": "Asia/Shanghai",
+    "tagline": "免费在线计算工具与实用指南，覆盖理财、装修、母婴、健康等生活场景。",
+}
+
+
 def read_config() -> dict:
-    """读取 config.yaml；CI/无配置环境下回退默认站点配置（域名用 --domain 覆盖）。"""
-    cfg_path = PROJECT_ROOT / "config.yaml"
-    if cfg_path.exists():
-        cfg = yaml.safe_load(cfg_path.read_text(encoding="utf-8")) or {}
-        if cfg.get("site"):
-            return cfg
-    return {
-        "site": {
-            "name": "我的工具站",
-            "url": "https://example.com",
-            "language": "zh-CN",
-            "tagline": "小而实用的在线工具与知识指南，全部免费使用。",
-        }
-    }
+    """读取站点配置：内置默认 ← site.yaml（入库）← config.yaml（本地，含密钥，优先级最高）。
+
+    config.yaml 里有 API Key，被 .gitignore 排除，CI 构建时并不存在。
+    若只依赖它，线上页面的站点名/og:site_name/JSON-LD publisher 会退回默认值，
+    因此站点信息必须同时落在已入库的 site.yaml 里。
+    """
+    cfg: dict = {"site": dict(DEFAULT_SITE)}
+    for fname in ("site.yaml", "config.yaml"):  # 后者覆盖前者
+        path = PROJECT_ROOT / fname
+        if not path.exists():
+            continue
+        loaded = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
+        if isinstance(loaded.get("site"), dict):
+            cfg["site"].update({k: v for k, v in loaded["site"].items() if v is not None})
+        for key, val in loaded.items():
+            if key != "site":
+                cfg[key] = val
+    return cfg
 
 
 def read_articles() -> list[dict]:
@@ -163,7 +176,7 @@ def page_wrap(title: str, content_html: str, site: dict, canonical: str = "", de
 <body>
 <header class="site-header">
   <div class="container header-inner">
-    <a class="logo" href="/">{escape(site.get('name', '我的工具站'))}</a>
+    <a class="logo" href="/">{escape(site.get('name', '流量谷'))}</a>
     <nav>
       <a href="/" class="{('active' if active == 'home' else '')}">首页</a>
       <a href="/#categories">分类</a>
@@ -173,7 +186,7 @@ def page_wrap(title: str, content_html: str, site: dict, canonical: str = "", de
 <main class="container">{content_html}</main>
 <footer class="site-footer">
   <div class="container">
-    <p>&copy; {datetime.now().year} {escape(site.get('name', '我的工具站'))} · 内容均为原创，仅供学习参考</p>
+    <p>&copy; {datetime.now().year} {escape(site.get('name', '流量谷'))} · 内容均为原创，仅供学习参考</p>
     <p><a href="/all/">全部内容</a> · <a href="/sitemap.xml">sitemap</a> · <a href="/robots.txt">robots</a> · <a href="/privacy/">隐私政策</a></p>
   </div>
 </footer>
@@ -225,7 +238,7 @@ def render_home(articles: list[dict], site: dict, registry: dict | None = None) 
 
     if not order:
         return (
-            '<section class="hero"><h1>' + escape(site.get("name", "我的工具站")) + "</h1>"
+            '<section class="hero"><h1>' + escape(site.get("name", "流量谷")) + "</h1>"
             '<p class="tagline">' + escape(site.get("tagline", "")) + "</p></section>"
             '<p class="empty">还没有文章。先运行 <code>python main.py generate --count 5</code> 生成内容。</p>'
         )
@@ -275,7 +288,7 @@ def render_home(articles: list[dict], site: dict, registry: dict | None = None) 
 
     return (
         f'<section class="hero">'
-        f'<h1>{escape(site.get("name", "我的工具站"))}</h1>'
+        f'<h1>{escape(site.get("name", "流量谷"))}</h1>'
         f'<p class="tagline">{escape(site.get("tagline", "小而实用的在线工具与实用指南，全部免费使用。"))}</p>'
         f"{stats}"
         f'<input id="q" class="search" type="search" autocomplete="off" '
@@ -458,7 +471,7 @@ transition:transform .15s,border-color .15s,color .15s}
 
 def render_privacy_page(site: dict) -> str:
     """生成隐私政策页（AdSense / 百度联盟 审核硬性要求）。"""
-    name = escape(site.get("name", "我的工具站"))
+    name = escape(site.get("name", "流量谷"))
     content = f"""
 <article class="post">
   <header><h1>隐私政策</h1></header>
@@ -514,7 +527,7 @@ def render_all_page(articles: list[dict], site: dict, registry: dict | None = No
             f"<ul class='all-list'>{''.join(lis)}</ul>"
         )
 
-    name = escape(site.get("name", "我的工具站"))
+    name = escape(site.get("name", "流量谷"))
     content = (
         f'<nav class="breadcrumb"><a href="/">首页</a> <span>/</span> <span>全部内容</span></nav>'
         f'<article class="post"><header><h1>全部工具与文章（{len(articles)} 篇）</h1>'
@@ -589,7 +602,8 @@ def build(domain: str | None = None) -> Path:
                 pass  # 目录被占用/权限受限时跳过，不影响本次生成
 
     (SITE_DIR / "index.html").write_text(
-        page_wrap(site.get("name", "我的工具站"), render_home(articles, site, registry), site,
+        page_wrap(f"{site.get('name', DEFAULT_SITE['name'])} · 免费在线计算工具与实用指南",
+                  render_home(articles, site, registry), site,
                   canonical=f"{site_url}/", description=site.get("tagline", ""), active="home"),
         encoding="utf-8",
     )

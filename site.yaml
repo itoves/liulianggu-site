@@ -1,0 +1,9 @@
+# 站点信息（不含密钥，纳入版本库）
+# 本地 config.yaml 的 site 段会覆盖这里的值；CI 构建时只有这个文件可用，
+# 所以改名/换域名/改 tagline 时，这里必须同步更新。
+site:
+  name: "流量谷"
+  url: "https://liulianggu.site"
+  language: "zh-CN"
+  timezone: "Asia/Shanghai"
+  tagline: "免费在线计算工具与实用指南，覆盖理财、装修、母婴、健康等生活场景。"
