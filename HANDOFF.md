@@ -1,7 +1,7 @@
 # 流量谷 · 项目交接文档（AGENT HANDOFF）
 
 > **给接手的人/Agent：先读这一份，再动手。** 这份文档取代此前的所有版本（旧版归档在 `.workbuddy/archive/HANDOFF-2026-10-14.md`）。
-> 最后更新：**2026-11-05** ｜ 对应线上提交：`bcab4cd` ｜ 站点：https://liulianggu.site
+> 最后更新：**2026-11-05** ｜ 代码基线提交：`bcab4cd` ｜ 站点：https://liulianggu.site
 
 ---
 
