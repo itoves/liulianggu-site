@@ -1,0 +1,39 @@
+{
+  "_说明": "变现位配置。所有字段留空 = 对应位置不渲染任何内容，页面与现在完全一致。cpa 的 key 必须与文章 frontmatter 的 category 完全一致（理财 / 装修 / 母婴 / 健康 / 教育 / 政务 / 出行 / 居家 / 饮食 / 职场 / 数码 / 工具 / 站长）。广告客户端 ID 不在这里填，统一放 verification.json 的 adsense 字段。",
+  "adsense": {
+    "slot_in_article": "",
+    "slot_bottom": ""
+  },
+  "cpa": {
+    "理财": {
+      "title": "",
+      "text": "",
+      "cta": "",
+      "url": ""
+    },
+    "装修": {
+      "title": "",
+      "text": "",
+      "cta": "",
+      "url": ""
+    },
+    "母婴": {
+      "title": "",
+      "text": "",
+      "cta": "",
+      "url": ""
+    },
+    "健康": {
+      "title": "",
+      "text": "",
+      "cta": "",
+      "url": ""
+    },
+    "教育": {
+      "title": "",
+      "text": "",
+      "cta": "",
+      "url": ""
+    }
+  }
+}

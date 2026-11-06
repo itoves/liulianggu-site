@@ -129,6 +129,7 @@ https://liulianggu.site/style.css          200（有 CDN 缓存，改动后用 ?
 ├── config.yaml            ★ 本地配置，含 DeepSeek API Key，**已被 gitignore**
 ├── config.example.yaml       配置模板（入库，给人看结构）
 ├── verification.json      ★ 搜索引擎验证码 + AdSense client ID（入库，空值=不注入）
+├── monetization.json      ★ 广告位 / CPA 线索位配置（入库，空值=不渲染，见 10.4）
 ├── topics.csv                选题池（keyword,category,target_url）
 ├── topics.example.csv        选题池模板
 ├── topics_used.json          已用选题记录（生成器维护，防重复）
@@ -503,6 +504,33 @@ curl -s "https://api.github.com/repos/itoves/liulianggu-site/actions/runs?per_pa
 - 已做的兜底：`/all/` 索引页 + 每页页脚入口。**下一步建议**：GSC 里移除后重新提交**完整 URL**（`https://liulianggu.site/sitemap.xml`），间隔 24–48 小时；同时用「网址检查 → 请求编入索引」手动催首页与 5–10 个重点工具页。
 
 ---
+
+### 10.4 变现位 `monetization.json`（2026-11-06 新增）
+
+广告与 CPA 的插入点已经写好，**全部"留空即不渲染"**——默认配置下生成的 HTML 与没有变现位时完全一致，不会有空盒子。
+
+```json
+{
+  "adsense": {"slot_in_article": "", "slot_bottom": ""},
+  "cpa": {"理财": {"title": "", "text": "", "cta": "", "url": ""}}
+}
+```
+
+| 位置 | 由谁控制 | 插入点（`render_article_page`） |
+| --- | --- | --- |
+| 广告客户端 ID | `verification.json.adsense`（`ca-pub-xxx`） | 每页 `<head>` + 自动生成 `site/ads.txt` |
+| 文内广告 | `monetization.json.adsense.slot_in_article` | 工具下方、正文之前 |
+| 文末广告 | `monetization.json.adsense.slot_bottom` | 正文之后 |
+| CPA/线索卡 | `monetization.json.cpa.<分类>` | 工具下方（用户刚算完，意图最强） |
+
+要点：
+- `render_ad_slot()` / `render_cpa_block()` / `adsense_client()` 在 `build_site.py` 第 105 行之后的「变现位」段。
+- CPA 块的 key 必须与 frontmatter 的 `category` **完全一致**；`url` 为空整块不渲染。
+- CPA 块自动带「推广」标识与 `rel="sponsored nofollow"`，**别去掉**（合规）。
+- `ads.txt` 随 `verification.json.adsense` 自动生成/删除，不要手工维护。
+- `_MONETIZATION` 是进程级缓存，**改完 `monetization.json` 必须重新构建**才生效。
+
+> 变现策略与阶段判断写在 `变现操作清单.md`（2026-11-06 重写版），交接时可直接给业务方看。
 
 ## 11. 巡检系统（`patrol.py` + 每周自动化）
 

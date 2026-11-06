@@ -133,6 +133,83 @@ def load_verification_head() -> str:
     return "\n".join(tags)
 
 
+# ---------------- 变现位（广告 / CPA） ----------------
+
+_MONETIZATION: dict | None = None
+
+
+def load_monetization() -> dict:
+    """读取 monetization.json（变现位配置），进程内缓存一次。
+
+    结构：
+      adsense.slot_in_article / adsense.slot_bottom —— AdSense 广告单元 slot ID；
+        广告客户端 ID 统一取自 verification.json 的 adsense 字段，避免两处维护。
+      cpa.<分类> —— {"title","text","cta","url"}，url 留空则整块不渲染。
+
+    设计原则：**留空即不渲染**。默认配置下页面 HTML 与不加变现位时完全一致，
+    不会出现空盒子、占位灰块，也不会影响现有布局与 SEO。
+    """
+    global _MONETIZATION
+    if _MONETIZATION is not None:
+        return _MONETIZATION
+    path = PROJECT_ROOT / "monetization.json"
+    data: dict = {}
+    if path.exists():
+        try:
+            data = json.loads(path.read_text(encoding="utf-8")) or {}
+        except Exception:
+            data = {}
+    _MONETIZATION = data if isinstance(data, dict) else {}
+    return _MONETIZATION
+
+
+def adsense_client() -> str:
+    """从 verification.json 取 AdSense 客户端 ID。"""
+    vp = PROJECT_ROOT / "verification.json"
+    if not vp.exists():
+        return ""
+    try:
+        return str((json.loads(vp.read_text(encoding="utf-8")) or {}).get("adsense") or "")
+    except Exception:
+        return ""
+
+
+def render_ad_slot(which: str) -> str:
+    """渲染一个 AdSense 单元。client 或 slot 缺失时返回空字符串。"""
+    client = adsense_client()
+    slot = str(((load_monetization().get("adsense") or {}).get(which)) or "").strip()
+    if not client or not slot:
+        return ""
+    return (
+        '<div class="ad-slot"><span class="ad-tag">广告</span>'
+        '<ins class="adsbygoogle" style="display:block"'
+        f' data-ad-client="{escape(client)}" data-ad-slot="{escape(slot)}"'
+        ' data-ad-format="auto" data-full-width-responsive="true"></ins></div>'
+        "<script>(adsbygoogle=window.adsbygoogle||[]).push({});</script>"
+    )
+
+
+def render_cpa_block(category: str) -> str:
+    """渲染与文章分类对应的合作推广块（CPA / 线索）。url 为空则不渲染。
+
+    合规要点：带「推广」标识 + rel="sponsored nofollow"，避免被判定为隐藏广告。
+    """
+    item = ((load_monetization().get("cpa") or {}).get(category) or {})
+    url = str(item.get("url") or "").strip()
+    if not url:
+        return ""
+    title = escape(str(item.get("title") or ""))
+    text = escape(str(item.get("text") or ""))
+    cta = escape(str(item.get("cta") or "了解详情"))
+    head = f'<div class="cpa-head"><strong>{title}</strong><span class="cpa-tag">推广</span></div>' if title else ""
+    body = f"<p>{text}</p>" if text else ""
+    return (
+        f'<aside class="cpa">{head}{body}'
+        f'<a class="cta" href="{escape(url)}" target="_blank" rel="sponsored nofollow noopener">{cta}</a>'
+        "</aside>"
+    )
+
+
 # ---------------- 渲染 ----------------
 
 def render_article_html(article: dict) -> str:
@@ -346,6 +423,11 @@ def render_article_page(article: dict, site: dict, registry: dict | None = None)
         for x in (json_ld if isinstance(json_ld, list) else [json_ld])
     )
 
+    # 变现位：留空即不渲染（见 load_monetization 说明）
+    cpa_html = render_cpa_block(meta.get("category", ""))
+    ad_top = render_ad_slot("slot_in_article")
+    ad_bottom = render_ad_slot("slot_bottom")
+
     tags = "".join(f'<span class="tag">{escape(t)}</span>' for t in (meta.get("tags") or []))
     content = f"""
 <nav class="breadcrumb"><a href="/">首页</a> <span>/</span> <span>{escape(meta.get('category', '文章'))}</span></nav>
@@ -354,7 +436,7 @@ def render_article_page(article: dict, site: dict, registry: dict | None = None)
     <h1>{escape(meta['title'])}</h1>
     <div class="post-meta"><time>{meta.get('date', '')}</time>{tags}</div>
   </header>
-  <div class="post-body">{widget_html}{body_html}</div>
+  <div class="post-body">{widget_html}{cpa_html}{ad_top}{body_html}{ad_bottom}</div>
 </article>
 <section class="related">
   <h2>相关阅读</h2>
@@ -453,6 +535,15 @@ transition:transform .15s,border-color .15s,color .15s}
 .tool-table th{background:#f9fafb}
 .tool-note{color:var(--muted);font-size:13px;margin:10px 0 0}
 .tool-disclaimer{margin-top:14px;font-size:13px;color:#b45309;background:#fffbeb;border:1px solid #fde68a;border-radius:8px;padding:8px 12px}
+.ad-slot{margin:22px 0;text-align:center}
+.ad-tag{display:block;font-size:11px;color:#9ca3af;letter-spacing:.1em;margin-bottom:4px}
+.cpa{margin:18px 0 4px;padding:16px 18px;border:1px solid #dbeafe;border-radius:12px;background:linear-gradient(135deg,#eff6ff,#f8fafc)}
+.cpa-head{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.cpa-head strong{font-size:16px;color:var(--ink)}
+.cpa-tag{font-size:11px;color:#64748b;border:1px solid #cbd5e1;border-radius:999px;padding:1px 7px}
+.cpa p{margin:0 0 12px;font-size:14px;color:var(--muted);line-height:1.7}
+.cpa .cta{display:inline-block;background:var(--accent);color:#fff;text-decoration:none;font-size:14px;padding:8px 18px;border-radius:8px}
+.cpa .cta:hover{background:#1d4ed8}
 .all-list{list-style:none;padding:0;margin:0 0 8px;columns:2;column-gap:28px}
 .all-list>li{margin:5px 0;font-size:14px;break-inside:avoid}
 .all-list a{color:var(--ink);text-decoration:none}
@@ -547,6 +638,15 @@ def write_static_files(site: dict, site_url: str) -> None:
     (SITE_DIR / "robots.txt").write_text(
         f"User-agent: *\nAllow: /\nSitemap: {site_url.rstrip('/')}/sitemap.xml\n", encoding="utf-8"
     )
+    # ads.txt：AdSense 审核通过后必须存在，否则会被标记「未授权卖方」。
+    # 客户端 ID 一填（verification.json.adsense），这里自动生成/更新。
+    ads_txt = SITE_DIR / "ads.txt"
+    client = adsense_client()
+    if client:
+        pub = client.strip().replace("ca-", "")
+        ads_txt.write_text(f"google.com, {pub}, DIRECT, f08c47fec0942fa0\n", encoding="utf-8")
+    elif ads_txt.exists():
+        ads_txt.unlink()
 
 
 def write_sitemap(articles: list[dict], site_url: str) -> None:
