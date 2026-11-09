@@ -378,7 +378,46 @@ def render_home(articles: list[dict], site: dict, registry: dict | None = None) 
     )
 
 
-def render_article_page(article: dict, site: dict, registry: dict | None = None) -> str:
+def pick_related(article: dict, articles: list[dict], limit: int = 4) -> list[dict]:
+    """挑选相关文章：同分类优先，不足则用最新文章补齐。排除自身。
+
+    内链价值：此前 59 篇文章横向零链接（每篇只链回首页），爬虫深度=2、
+    主题簇（topical cluster）也无法形成。这里补上同簇互链。
+    """
+    me = article["meta"]["slug"]
+    cat = _norm_cat(article["meta"].get("category", ""))
+    same = [a for a in articles
+            if a["meta"]["slug"] != me and _norm_cat(a["meta"].get("category", "")) == cat]
+    chosen = same[:limit]
+    if len(chosen) < limit:
+        chosen_slugs = {a["meta"]["slug"] for a in chosen} | {me}
+        rest = sorted(
+            (a for a in articles if a["meta"]["slug"] not in chosen_slugs),
+            key=lambda x: x["meta"].get("date", ""), reverse=True,
+        )
+        chosen += rest[: limit - len(chosen)]
+    return chosen
+
+
+def render_related(article: dict, articles: list[dict], registry: dict) -> str:
+    items = pick_related(article, articles)
+    if not items:
+        return ""
+    lis = []
+    for a in items:
+        m = a["meta"]
+        kw = (m.get("keyword") or "").strip()
+        flag = ' <span class="all-flag">⚡工具</span>' if registry.get(kw) else ""
+        lis.append(f'<li><a href="/{m["slug"]}/">{escape(m["title"])}</a>{flag}</li>')
+    return (
+        '<section class="related"><h2>相关阅读</h2>'
+        f'<ul class="rel-list">{"".join(lis)}</ul>'
+        f'<p class="rel-more"><a href="/all/">查看全部 {len(articles)} 篇内容 →</a></p></section>'
+    )
+
+
+def render_article_page(article: dict, site: dict, registry: dict | None = None,
+                        articles: list[dict] | None = None) -> str:
     meta = article["meta"]
     body_html = render_article_html(article)
     site_url = site["url"].rstrip("/")
@@ -438,10 +477,7 @@ def render_article_page(article: dict, site: dict, registry: dict | None = None)
   </header>
   <div class="post-body">{widget_html}{cpa_html}{ad_top}{body_html}{ad_bottom}</div>
 </article>
-<section class="related">
-  <h2>相关阅读</h2>
-  <p><a href="/">返回首页查看其他文章</a></p>
-</section>"""
+{render_related(article, articles or [], registry or {})}"""
     return page_wrap(meta["title"], content, site, canonical=canonical,
                      description=meta.get("summary", ""), extra_head=ld_block + tool_script)
 
@@ -512,6 +548,13 @@ transition:transform .15s,border-color .15s,color .15s}
 .post-body code{background:#f3f4f6;padding:2px 5px;border-radius:4px;font-size:13px}
 .post-body a{color:var(--accent)}
 .related{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px 28px;margin-bottom:40px}
+.related h2{font-size:18px;margin:0 0 12px}
+.rel-list{list-style:none;padding:0;margin:0;columns:2;column-gap:28px}
+.rel-list>li{margin:6px 0;font-size:14px;break-inside:avoid}
+.rel-list a{color:var(--ink);text-decoration:none}
+.rel-list a:hover{color:var(--accent);text-decoration:underline}
+.rel-more{margin:14px 0 0;font-size:14px}
+.rel-more a{color:var(--accent);text-decoration:none}
 .site-footer{border-top:1px solid var(--line);background:#fff;color:var(--muted);font-size:13px;padding:26px 0;margin-top:40px}
 .site-footer p{margin:4px 0}
 .site-footer a{color:var(--accent);text-decoration:none}
@@ -711,7 +754,9 @@ def build(domain: str | None = None) -> Path:
         meta = a["meta"]
         page_dir = SITE_DIR / meta["slug"]
         page_dir.mkdir(parents=True, exist_ok=True)
-        (page_dir / "index.html").write_text(render_article_page(a, site, registry), encoding="utf-8")
+        (page_dir / "index.html").write_text(
+            render_article_page(a, site, registry, articles), encoding="utf-8"
+        )
 
     write_static_files(site, site_url)
     write_sitemap(articles, site_url)

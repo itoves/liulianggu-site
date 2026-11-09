@@ -214,7 +214,7 @@ DEFAULT_SITE（硬编码真值：流量谷 / https://liulianggu.site / tagline�
 - 搜索是**纯前端过滤**：`HOME_SEARCH_JS` 读 `#q`，逐个 `.cat-section` / `.card` 比对 `data-search`，无结果时显示 `#nores`。**不支持拼音/模糊匹配**，只做 `indexOf`。
 - `registry` 用来判断「这一页有没有工具」→ 渲染 `⚡ 可在线计算` 角标与统计数。
 
-### 5.4 文章页 `render_article_page(article, site, registry)`
+### 5.4 文章页 `render_article_page(article, site, registry, articles)`
 
 关键逻辑：
 
@@ -227,6 +227,8 @@ if tool_cfg:
 ```
 
 - **工具容器插在正文最前面**（`<div class="post-body">{widget_html}{body_html}</div>`），即「先给工具，再给解释」。
+- **正文结构（2026-11-09 起）**：`{widget}{cpa}{ad_in_article}{body}{ad_bottom}` —— CPA 贴近工具、广告分两处，全部留空则不渲染（见 10.4）。
+- **相关阅读（2026-11-09 新增）**：`pick_related()` 取同分类前 4 篇，不足用最新文章补齐，生成 4 条同簇内链（59 页共 236 条）；末尾链到 `/all/`。**此前每篇只链回首页，爬虫深度=2、无法形成主题簇**，改动后全站站内出链约 965 条。新增文章无需额外操作，自动进簇。
 - JSON-LD：frontmatter 有 `json_ld` 就用它（`Article`），否则按字段兜底生成；**有工具的页面再追加一条 `SoftwareApplication`**（`applicationCategory: UtilityApplication`、免费）。
 - FAQ 的 `FAQPage` schema 来自 frontmatter 的 `json_ld`（部分文章是 list），正文**不再重复写 FAQ 小节**。
 
